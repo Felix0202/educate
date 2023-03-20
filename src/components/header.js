@@ -11,7 +11,7 @@ export default function header() {
 
                 <div className={"headerNav"}>
                     <a className={"headerLink"} href="../">ABOUT</a>
-                    <a className={"headerLink"} href="">DASHBOARD</a>
+                    <a className={"headerLink"} href="../dashboard">DASHBOARD</a>
                     <div className={"headerLogIn headerButton"} onClick={(e) => router.push({
                         pathname: '/authentication',
                         query: { authMethod: 1 }
