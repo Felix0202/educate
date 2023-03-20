@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9348a09e-6ce3-4593-93ee-a8e5f9034250" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/educate/src/pages/about.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educate/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/educate/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educate/src/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/educate/src/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educate/src/pages/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/educate/src/styles/globals.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/about.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +26,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/educate" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -45,6 +44,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "true",
+    "last_opened_file_path": "/Users/felixwimberger/Desktop/3BHITM/MEDTWT/Project/educate",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -76,6 +76,7 @@
       <workItem from="1678998595020" duration="13000" />
       <workItem from="1679294276234" duration="115000" />
       <workItem from="1679332889997" duration="9875000" />
+      <workItem from="1679343165418" duration="240000" />
     </task>
     <servers />
   </component>
