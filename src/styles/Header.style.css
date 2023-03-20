@@ -1,0 +1,70 @@
+header {
+    width: 100vw;
+    height: var(--header-height);
+    background-color: var(--header-bg-color);
+
+    display: flex;
+    justify-content: space-between;
+    padding: var(--header-height-padding);
+    position: relative;
+}
+
+header > div {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.headerTitle {
+    font-size: var(--header-heigh-font);
+    color: var(--font-color-link);
+    cursor: default;
+}
+
+.headerTitleE {
+    color: var(--font-color-normal);
+}
+
+.headerNav {
+    display: flex;
+    left: 100%;
+    transform: translate(-100%, -50%);
+    padding-right: var(--header-height-font-link-padding);
+    padding-left: var(--header-height-font-link-padding);
+}
+
+.headerLink {
+    color: var(--font-color-link);
+    font-size: var(--header-height-font-link);
+    padding: var(--header-height-font-link-padding);
+    cursor: pointer;
+}
+
+.headerLink:hover{
+    color: var(--font-color-hover);
+}
+
+.headerButton {
+    min-width: var(--header-button-min-width);
+    height: var(--header-button-height);
+    margin: var(--header-button-margin);
+    padding: var(--header-button-padding);
+    font-size: var(--header-button-font-size);
+    border-radius: var(--header-button-radius);
+    text-align: center;
+    cursor: pointer;
+}
+
+.headerButton:hover{
+    color: var(--font-color-hover);
+}
+
+.headerLogIn {
+    background-color: white;
+    color: black;
+}
+
+.headerSignIn {
+    background-color: var(--font-color-link);
+    color: white;
+}

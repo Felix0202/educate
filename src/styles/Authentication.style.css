@@ -1,0 +1,53 @@
+.authBox {
+    width: var(--auth-box-width);
+    height: var(--auth-box-height);
+    background-color: var(--box1Level-bg-color);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: var(--auth-box-padding);
+    border-radius: var(--auth-box-radius);
+}
+
+.authTitle{
+    margin-bottom: 3vh;
+    font-size: var(--auth-title-font-size);
+}
+
+.authLabel{
+    font-size: var(--auth-label-font-size);
+    margin-bottom: 1vh;
+}
+
+.authButton{
+    background-color: var(--button-bg-color);
+    font-size: var(--auth-input-font-size);
+    padding: var(--auth-input-padding);
+    border-radius: var(--auth-input-radius);
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 2vh;
+}
+
+.authButton:hover{
+    background-color: var(--font-color-hover);
+}
+
+.authLink{
+    text-decoration: underline;
+}
+
+.authLink:hover{
+    color: var(--font-color-hover);
+}
+
+.authInput {
+    font-size: var(--auth-input-font-size);
+    padding: var(--auth-input-padding);
+    width: 100%;
+    background-color: var(--input-bg-color);
+    border: 0px solid;
+    border-radius: var(--auth-input-radius);
+    color: var(--font-color-normal);
+}
