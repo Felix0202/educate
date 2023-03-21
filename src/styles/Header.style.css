@@ -64,6 +64,10 @@ header > div {
     color: black;
 }
 
+.headerLogIn:hover {
+    background-color: var();
+}
+
 .headerSignIn {
     background-color: var(--font-color-link);
     color: white;

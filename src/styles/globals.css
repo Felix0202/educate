@@ -31,7 +31,7 @@
     --header-button-font-size: 2vh;
 
     --auth-box-width: 50vw;
-    --auth-box-height: 60vh;
+    --auth-box-height: auto;
     --auth-box-radius: 2vh;
     --auth-box-padding: 6vh;
     --auth-title-font-size: 4.5vh;

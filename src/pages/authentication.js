@@ -17,7 +17,7 @@ export default function Authentication() {
                         <p className={"authLabel"}>Password:</p>
                         <input className={"authInput"} type="password"/>
                         <br/><br/><br/>
-                        <div className={"authButton"}>
+                        <div className={"authButton"} onClick={() => loadShit2()}>
                             Sign up
                         </div>
                         <p>Already have a account? <span className={"authLink"} onClick={(e) => router.push({
@@ -52,4 +52,8 @@ export default function Authentication() {
             </>
         )
     }
+}
+
+function loadShit2() {
+    console.log("geh leck 2");
 }

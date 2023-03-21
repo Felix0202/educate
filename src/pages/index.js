@@ -6,6 +6,8 @@ export default function Home() {
       <Header></Header>
         <div>
             <h2>About site</h2>
+            <br/><br/><br/>
+            <h1>this site is currently in development!</h1>
         </div>
     </>
   )

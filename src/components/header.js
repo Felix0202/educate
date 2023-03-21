@@ -5,7 +5,7 @@ export default function header() {
     return (
         <>
             <header>
-                <div>
+                <div onClick={(e) => router.push("../")}>
                     <h1 className={"headerTitle"}><span className={"headerTitleE"}>E</span>ducate</h1>
                 </div>
 
