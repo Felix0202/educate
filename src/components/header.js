@@ -20,7 +20,6 @@ export default function header() {
                         pathname: '/authentication',
                         query: { authMethod: 2 }
                     }, '/authentication')}>SIGN UP</div>
-
                 </div>
             </header>
         </>

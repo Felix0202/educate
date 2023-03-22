@@ -40,7 +40,7 @@ header > div {
     cursor: pointer;
 }
 
-.headerLink:hover{
+.headerLink:hover {
     color: var(--font-color-hover);
 }
 
@@ -55,7 +55,7 @@ header > div {
     cursor: pointer;
 }
 
-.headerButton:hover{
+.headerButton:hover {
     color: var(--font-color-hover);
 }
 
@@ -65,10 +65,15 @@ header > div {
 }
 
 .headerLogIn:hover {
-    background-color: var();
+    background-color: var(--font-color-hover);
+    color: white;
 }
 
 .headerSignIn {
     background-color: var(--font-color-link);
     color: white;
+}
+
+.headerSignIn:hover {
+    color: var(--font-color-hover);
 }

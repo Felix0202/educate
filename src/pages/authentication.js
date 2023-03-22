@@ -14,6 +14,9 @@ export default function Authentication() {
                         <p className={"authLabel"}>Username:</p>
                         <input className={"authInput"} type="text"/>
                         <br/><br/>
+                        <p className={"authLabel"}>Email:</p>
+                        <input className={"authInput"} type="email"/>
+                        <br/><br/>
                         <p className={"authLabel"}>Password:</p>
                         <input className={"authInput"} type="password"/>
                         <br/><br/><br/>
@@ -24,7 +27,21 @@ export default function Authentication() {
                             pathname: '/authentication',
                             query: { authMethod: 1 }
                         }, '/authentication')}>Log in</span></p>
-
+                    </div>
+                </div>
+            </>
+        )
+    } else if (router.query.authMethod == 3) {
+        return (
+            <>
+                <Header></Header>
+                <div className={"authBox"}>
+                    <h1 className={"authTitle"}>Forgot Username/Password</h1>
+                    <p className={"authLabel"}>Email:</p>
+                    <input className={"authInput"} type="text"/>
+                    <br/><br/>
+                    <div className={"authButton"}>
+                        Send Email
                     </div>
                 </div>
             </>
@@ -48,6 +65,10 @@ export default function Authentication() {
                         pathname: '/authentication',
                         query: { authMethod: 2 }
                     }, '/authentication')}>Create one</span></p>
+                    <p><span className={"authLink"} onClick={(e) => router.push({
+                        pathname: '/authentication',
+                        query: { authMethod: 3 }
+                    }, '/authentication')}>Forgot Username/Password?</span></p>
                 </div>
             </>
         )

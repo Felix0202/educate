@@ -7,11 +7,8 @@
     <list default="true" id="9348a09e-6ce3-4593-93ee-a8e5f9034250" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/_app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/styles/Header.style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/Header.style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +32,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2MzkQj2hkGQhHssaZza2i4lBds8" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -47,7 +44,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/felixwimberger/Desktop/3BHITM/MEDTWT/Project/educate&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/felixwimberger/Desktop/3BHITM/MEDTWT/educate/educate_frontend&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -81,6 +78,9 @@
       <workItem from="1679332889997" duration="9875000" />
       <workItem from="1679343165418" duration="1442000" />
       <workItem from="1679380776488" duration="2815000" />
+      <workItem from="1679468429695" duration="148000" />
+      <workItem from="1679468591398" duration="18000" />
+      <workItem from="1679468618801" duration="1913000" />
     </task>
     <servers />
   </component>
