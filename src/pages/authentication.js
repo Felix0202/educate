@@ -1,9 +1,13 @@
 import Header from '../components/header';
 import {useEffect} from "react";
 import {useRouter} from "next/router";
+import {forgotAuth, signUp, logIn} from "@/scripts/loadFunctions";
 
 export default function Authentication() {
     const router = useRouter();
+
+    let userName = '';
+
     if (router.query.authMethod == 2) {
         return (
             <>
@@ -12,20 +16,22 @@ export default function Authentication() {
                     <div className={"authBox"}>
                         <h1 className={"authTitle"}>SIGN UP</h1>
                         <p className={"authLabel"}>Username:</p>
-                        <input className={"authInput"} type="text"/>
+                        <input className={"authInput"} id={'userName'} type="text"/>
                         <br/><br/>
                         <p className={"authLabel"}>Email:</p>
-                        <input className={"authInput"} type="email"/>
+                        <input className={"authInput"} id={'eMail'} type="email"/>
                         <br/><br/>
                         <p className={"authLabel"}>Password:</p>
-                        <input className={"authInput"} type="password"/>
+                        <input className={"authInput"} id={'password'} type="password"/>
                         <br/><br/><br/>
-                        <div className={"authButton"} onClick={() => loadShit2()}>
+                        <div className={"authButton"} onClick={() => {
+                            signUp();
+                        }}>
                             Sign up
                         </div>
                         <p>Already have a account? <span className={"authLink"} onClick={(e) => router.push({
                             pathname: '/authentication',
-                            query: { authMethod: 1 }
+                            query: { authMethod: 1, userName: '' }
                         }, '/authentication')}>Log in</span></p>
                     </div>
                 </div>
@@ -38,9 +44,11 @@ export default function Authentication() {
                 <div className={"authBox"}>
                     <h1 className={"authTitle"}>Forgot Username/Password</h1>
                     <p className={"authLabel"}>Email:</p>
-                    <input className={"authInput"} type="text"/>
+                    <input className={"authInput"} id={'eMail'} type="text"/>
                     <br/><br/>
-                    <div className={"authButton"}>
+                    <div className={"authButton"} onClick={() => {
+                        forgotAuth();
+                    }}>
                         Send Email
                     </div>
                 </div>
@@ -53,12 +61,14 @@ export default function Authentication() {
                 <div className={"authBox"}>
                     <h1 className={"authTitle"}>LOG IN</h1>
                     <p className={"authLabel"}>Username:</p>
-                    <input className={"authInput"} type="text"/>
+                    <input className={"authInput"} id={'userName'} type="text"/>
                     <br/><br/>
                     <p className={"authLabel"}>Password:</p>
-                    <input className={"authInput"} type="password"/>
+                    <input className={"authInput"} id={'password'} type="password"/>
                     <br/><br/><br/>
-                    <div className={"authButton"}>
+                    <div className={"authButton"} onClick={() => {
+                        logIn();
+                    }}>
                         Log in
                     </div>
                     <p>Don´t have a account yet? <span className={"authLink"} onClick={(e) => router.push({
@@ -73,8 +83,4 @@ export default function Authentication() {
             </>
         )
     }
-}
-
-function loadShit2() {
-    console.log("geh leck 2");
 }

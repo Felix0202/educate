@@ -7,7 +7,3 @@ import '../styles/About.style.css';
 export default function App({ Component, pageProps }) {
   return <Component {...pageProps} />
 }
-
-function loadShit () {
-  console.log("geh leck");
-}
