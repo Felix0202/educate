@@ -6,8 +6,6 @@ import {forgotAuth, signUp, logIn} from "@/scripts/loadFunctions";
 export default function Authentication() {
     const router = useRouter();
 
-    let userName = '';
-
     if (router.query.authMethod == 2) {
         return (
             <>
@@ -31,7 +29,7 @@ export default function Authentication() {
                         </div>
                         <p>Already have a account? <span className={"authLink"} onClick={(e) => router.push({
                             pathname: '/authentication',
-                            query: { authMethod: 1, userName: '' }
+                            query: { authMethod: 1}
                         }, '/authentication')}>Log in</span></p>
                     </div>
                 </div>
