@@ -77,3 +77,26 @@ header > div {
 .headerSignIn:hover {
     color: var(--font-color-hover);
 }
+
+.headerAccount {
+    min-width: var(--header-button-account-min-width);
+    height: var(--header-button-height);
+    margin: var(--header-button-margin);
+    padding: var(--header-button-padding);
+    font-size: var(--header-button-font-size);
+    border-radius: var(--header-button-radius);
+    text-align: center;
+    cursor: pointer;
+    background-color: var(--font-color-link);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+.headerSignIn:hover {
+    color: var(--font-color-hover);
+}
+
+#headerSettings{
+    height: var(--header-button-account-img);
+}

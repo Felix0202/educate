@@ -29,6 +29,8 @@
     --header-button-margin: 0.5vh;
     --header-button-padding: 0.75vh;
     --header-button-font-size: 2vh;
+    --header-button-account-img: 2.5vh;
+    --header-button-account-min-width: 14vw;
 
     --auth-box-width: 50vw;
     --auth-box-height: auto;
