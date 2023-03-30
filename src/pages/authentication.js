@@ -86,7 +86,7 @@ export default function Authentication() {
                         <p className={"authLabel"}>Password:</p>
                         <input className={"authInput"} id={'password'} type="password"/>
                         <br/><br/><br/>
-                        <div className={"authButton"} onClick={() => {
+                        <div className={"authButton"} id={"submitButton"} onClick={() => {
                             signUp();
                         }}>
                             Sign up
@@ -108,7 +108,7 @@ export default function Authentication() {
                     <p className={"authLabel"}>Email:</p>
                     <input className={"authInput"} id={'eMail'} type="text"/>
                     <br/><br/>
-                    <div className={"authButton"} onClick={() => {
+                    <div className={"authButton"} id={"submitButton"} onClick={() => {
                         forgotAuth();
                     }}>
                         Send Email
@@ -128,7 +128,7 @@ export default function Authentication() {
                     <p className={"authLabel"}>Password:</p>
                     <input className={"authInput"} id={'password'} type="password"/>
                     <br/><br/><br/>
-                    <div className={"authButton"} onClick={() => {
+                    <div className={"authButton"} id={"submitButton"} onClick={() => {
                         logIn();
                     }}>
                         Log in
@@ -137,7 +137,7 @@ export default function Authentication() {
                         pathname: '/authentication',
                         query: {authMethod: 2}
                     }, '/authentication')}>Create one</span></p>
-                    <p><span className={"authLink"} onClick={(e) => router.push({
+                    <p><span className={"authLink"}onClick={(e) => router.push({
                         pathname: '/authentication',
                         query: {authMethod: 3}
                     }, '/authentication')}>Forgot Username/Password?</span></p>

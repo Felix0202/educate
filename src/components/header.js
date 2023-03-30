@@ -1,5 +1,6 @@
 import {useRouter} from "next/router";
 import {loggedIn, userData} from "@/pages/authentication";
+import Link from "next/link";
 
 export default function header() {
     const router = useRouter();
@@ -13,12 +14,12 @@ export default function header() {
                     </div>
 
                     <div className={"headerNav"}>
-                        <a className={"headerLink"} href="../">ABOUT</a>
-                        <a className={"headerLink"} href="../dashboard">DASHBOARD</a>
-                        <div className={"headerAccount"} onClick={(e) => router.push({}, '/authentication')}>
+                        <Link className={"headerLink"} href="../">ABOUT</Link>
+                        <Link className={"headerLink"} href="../dashboard">DASHBOARD</Link>
+                        <Link className={"headerAccount"} href="../settings">
                             <img id={"headerSettings"} src="../../settings.svg" alt=""/>
                             {userData.name}
-                        </div>
+                        </Link>
                     </div>
                 </header>
             </>
@@ -32,18 +33,18 @@ export default function header() {
                     </div>
 
                     <div className={"headerNav"}>
-                        <a className={"headerLink"} href="../">ABOUT</a>
-                        <a className={"headerLink"} href="../dashboard">DASHBOARD</a>
-                        <div className={"headerLogIn headerButton"} onClick={(e) => router.push({
+                        <Link className={"headerLink"} href="../">ABOUT</Link>
+                        <Link className={"headerLink"} href="../dashboard">DASHBOARD</Link>
+                        <Link className={"headerLogIn headerButton"}  href={{
                             pathname: '/authentication',
                             query: {authMethod: 1}
-                        }, '/authentication')}>LOG IN
-                        </div>
-                        <div className={"headerSignIn headerButton"} onClick={(e) => router.push({
+                        }}>LOG IN
+                        </Link>
+                        <Link className={"headerSignIn headerButton"} href={{
                             pathname: '/authentication',
                             query: {authMethod: 2}
-                        }, '/authentication')}>SIGN UP
-                        </div>
+                        }}>SIGN UP
+                        </Link>
                     </div>
                 </header>
             </>

@@ -2,7 +2,7 @@ import Header from '../components/header';
 import {loggedIn, userData} from "@/pages/authentication";
 import {useRouter} from "next/router";
 
-export default function Dashboard() {
+export default function Settings() {
     const router = useRouter();
 
     if (loggedIn) {
@@ -10,7 +10,7 @@ export default function Dashboard() {
             <>
                 <Header></Header>
                 <div>
-                    <h2>Dashboard</h2>
+                    <h2>Settings</h2>
                     <p>you are logged in!</p>
                     <p>{userData.userName}</p>
                 </div>
