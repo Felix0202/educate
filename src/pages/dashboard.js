@@ -1,9 +1,20 @@
 import Header from '../components/header';
 import {loggedIn, userData} from "@/pages/authentication";
 import {useRouter} from "next/router";
+import axios from "axios";
 
 export default function Dashboard() {
     const router = useRouter();
+
+    const example = () => {
+        axios.post('/api/checkLoggedIn', {
+            authtoken: userData.authtoken,
+            userId: userData.userId
+        })
+            .then((res) => {
+                console.log(res.data);
+            });
+    }
 
     if (loggedIn) {
         return (
@@ -14,6 +25,9 @@ export default function Dashboard() {
                     <p>you are logged in!</p>
                     <p>{userData.userName}</p>
                 </div>
+                <div className={"authButton"} id={"submitButton"} onClick={() => {
+                    example();
+                }}>Test Login</div>
             </>
         )
     } else {

@@ -93,7 +93,7 @@ header > div {
     justify-content: space-between;
 }
 
-.headerSignIn:hover {
+.headerAccount:hover {
     color: var(--font-color-hover);
 }
 

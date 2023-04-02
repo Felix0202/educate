@@ -25,6 +25,7 @@ export default function Authentication() {
             if (res.data[0] && res.data[0].userId) {
                 userData = res.data[0];
                 loggedIn = true;
+                console.log(userData)
                 delete userData['password'];
                 router.push('/dashboard');
             } else {
@@ -55,6 +56,7 @@ export default function Authentication() {
                 userData = res.data[0];
                 loggedIn = true;
                 delete userData['password'];
+                console.log(userData);
                 router.push('/dashboard');
             } else {
                 console.log(res.data);

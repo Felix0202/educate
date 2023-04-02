@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 30. Mrz 2023 um 11:55
+-- Erstellungszeit: 02. Apr 2023 um 16:37
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.2.0
 
@@ -74,6 +74,27 @@ CREATE TABLE `courseEntry` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `session`
+--
+
+CREATE TABLE `session` (
+  `sessionId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `authtoken` varchar(30) NOT NULL,
+  `lastLogin` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `session`
+--
+
+INSERT INTO `session` (`sessionId`, `userId`, `authtoken`, `lastLogin`) VALUES
+(23, 72, 'iEtENdVtPBQ1UI7Gs1fuqXMKKiI8Fq', '2023-04-02 16:18:00'),
+(37, 73, 'zCF1C5CSVJzgbC6OgsuE9msuy1DHav', '2023-04-02 16:37:05');
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `textEntry`
 --
 
@@ -113,7 +134,9 @@ INSERT INTO `user` (`userId`, `name`, `password`, `email`, `username`) VALUES
 (67, 'test User8', '209314ed8a802af58a0dffebf455fe66', 'test', 'testUser8'),
 (68, 'test User 9', '209314ed8a802af58a0dffebf455fe66', 'test@user.com', 'testUser9'),
 (70, 'test User 10', '209314ed8a802af58a0dffebf455fe66', 'test@user.com', 'testUser10'),
-(71, 'test User11', '209314ed8a802af58a0dffebf455fe66', 'test@user.com', 'testUser11');
+(71, 'test User11', '209314ed8a802af58a0dffebf455fe66', 'test@user.com', 'testUser11'),
+(72, 'admin', '209314ed8a802af58a0dffebf455fe66', 'admin@test@com', 'admin'),
+(73, 'admin2', 'f996d74d500fb2f49077bb430ae92fc1', 'admin@test.com', 'a');
 
 -- --------------------------------------------------------
 
@@ -153,6 +176,12 @@ ALTER TABLE `course`
 --
 ALTER TABLE `courseEntry`
   ADD PRIMARY KEY (`entryId`);
+
+--
+-- Indizes für die Tabelle `session`
+--
+ALTER TABLE `session`
+  ADD PRIMARY KEY (`sessionId`);
 
 --
 -- Indizes für die Tabelle `textEntry`
@@ -202,6 +231,12 @@ ALTER TABLE `courseEntry`
   MODIFY `entryId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT für Tabelle `session`
+--
+ALTER TABLE `session`
+  MODIFY `sessionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
 -- AUTO_INCREMENT für Tabelle `textEntry`
 --
 ALTER TABLE `textEntry`
@@ -211,7 +246,7 @@ ALTER TABLE `textEntry`
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
