@@ -1,0 +1,24 @@
+.dashMain {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: var(--main-box-margin-top);
+}
+
+.dashCourse {
+    background-color: var(--box1Level-bg-color);
+    color: white;
+    width: var(--dash-course-box-width);
+    height: var(--dash-course-box-height);
+    border-radius: var(--dash-course-box-radius);
+    padding: var(--dash-course-box-padding);
+}
+
+.dashCourse > h2 {
+    font-size: var(--dash-course-title-font-size);
+}
+
+.dashCourse > p {
+    font-size: var(--dash-course-info-font-size);
+    padding: var(--dash-course-info-padding);
+}

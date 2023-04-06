@@ -1,0 +1,30 @@
+courseNav {
+    background-color: var(--boxInfo1Level-bg-color);
+    width: var(--courseNav-box-width);
+    height: var(--courseNav-box-height);
+    margin: var(--courseNav-box-margin);
+    padding: var(--courseNav-box-padding);
+    border-radius: var(--courseNav-box-radius);
+    font-size: var(--courseNav-title-font-size);
+}
+
+.courseNavInput {
+    background-color: var(--box2Level-bg-color);
+    color: var(--font-color-normal);
+    width: 100%;
+    font-size: var(--courseNav-font-size);
+    margin-top: var(--courseNav-entry-margin);
+    margin-bottom: var(--courseNav-entry-margin);
+    border: 1px solid var(--box2Level-bg-color);
+    border-radius: var(--courseNav-entry-radius);
+    padding: var(--courseNav-entry-padding);
+}
+
+.courseNavCourse{
+    background-color: var(--boxInfo2Level-bg-color);
+    padding: var(--courseNav-entry-padding);
+    cursor: pointer;
+    border-radius: var(--courseNav-entry-radius);
+    margin-top: var(--courseNav-entry-margin);
+
+}

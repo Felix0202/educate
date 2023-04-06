@@ -12,7 +12,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-function userLoggedIn ($conn, $userId) {
+function userLoggedIn($conn, $userId)
+{
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $authToken = '';
 
@@ -23,14 +24,16 @@ function userLoggedIn ($conn, $userId) {
     try {
         $query = "DELETE FROM session WHERE userId = '$userId'";
         $result = $conn->query($query);
-    } catch (Exception $ex) {}
+    } catch (Exception $ex) {
+    }
 
     $query = "INSERT INTO `session` (`userId`, `authtoken`, `lastLogin`) VALUES ('$userId', '$authToken', current_timestamp())";
     $result = $conn->query($query);
     return $authToken;
 }
 
-function checkUserLoggedIn($conn) {
+function checkUserLoggedIn($conn)
+{
     $postBody = json_decode(file_get_contents('php://input'));
     $userId = $conn->real_escape_string($postBody->userId);
     $authToken = $conn->real_escape_string($postBody->authtoken);
@@ -137,10 +140,34 @@ if ($_GET["loginUser"]) {
             $emparray = array();
             while ($row = mysqli_fetch_assoc($result)) {
                 $emparray[] = $row;
-                echo json_encode($emparray);
                 $isReqOk = true;
             }
+            echo json_encode($emparray);
         }
+    }
+
+    if ($_GET["loadCourses"]) {
+        $postBody = json_decode(file_get_contents('php://input'));
+        $userId = $conn->real_escape_string($postBody->userId);
+        $query = "SELECT courseId, title, note, DATE_FORMAT(creationDate, '%d.%m.%Y') 'creationDate' FROM usercourse join course using(courseId) WHERE userId = '$userId'";
+        if ($result = $conn->query($query)) {
+            if ($result->num_rows != 0) {
+                $emparray = array();
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $emparray[] = $row;
+                    $isReqOk = true;
+                }
+                echo json_encode($emparray);
+            }
+        }
+
+        if (!$isReqOk) {
+            $isReqOk = true;
+            $response = new stdClass();
+            $response->message = "No courses yet!";
+            echo $response;
+        }
+
     }
 
     if ($_GET["isLoggedIn"]) {

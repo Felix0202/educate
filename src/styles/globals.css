@@ -42,6 +42,27 @@
     --auth-input-padding: 1.5vh;
     --auth-input-radius: 1vh;
 
+    --courseNav-box-width: 18vw;
+    --courseNav-box-height: 89vh;
+    --courseNav-box-margin: 2vh 1vw 2vh 1vw;
+    --courseNav-box-padding: 1vw;
+    --courseNav-box-radius: 1vw;
+    --courseNav-title-font-size: 2vh;
+    --courseNav-font-size: 2vh;
+    --courseNav-entry-margin: 0.5vh;
+    --courseNav-entry-padding: 0.5vh;
+    --courseNav-entry-radius: 0.6vh;
+
+    --main-box-width: 75vw;
+    --main-box-margin-top: 2vh;
+
+    --dash-course-box-width: 35vw;
+    --dash-course-box-height: 30vh;
+    --dash-course-box-radius: 1vw;
+    --dash-course-box-padding: 1vh 1vw 1vh 1vw;
+    --dash-course-title-font-size: 5vh;
+    --dash-course-info-font-size: 2.2vh;
+    --dash-course-info-padding: 0.5vh;
 }
 
 @font-face {
@@ -66,4 +87,15 @@ body {
     background-color: var(--main-bg-color);
     color: var(--font-color-normal);
     overflow-y: hidden;
+}
+
+.main {
+    width: 100vw;
+    display: flex;
+    gap: 2.5vw;
+}
+
+.mainBox {
+    width: var(--main-box-width);
+    margin-top: var(--main-box-margin-top);
 }

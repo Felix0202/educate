@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 02. Apr 2023 um 16:37
+-- Erstellungszeit: 06. Apr 2023 um 10:45
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.2.0
 
@@ -59,6 +59,14 @@ CREATE TABLE `course` (
   `isPublic` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Daten für Tabelle `course`
+--
+
+INSERT INTO `course` (`courseId`, `title`, `note`, `creationDate`, `isPublic`) VALUES
+(1, 'ExampleCourse', 'this is a test', '2023-04-03 19:47:12', 1),
+(2, 'Example Course 2', 'this is a test 2 ', '2023-04-04 18:06:50', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -90,7 +98,7 @@ CREATE TABLE `session` (
 
 INSERT INTO `session` (`sessionId`, `userId`, `authtoken`, `lastLogin`) VALUES
 (23, 72, 'iEtENdVtPBQ1UI7Gs1fuqXMKKiI8Fq', '2023-04-02 16:18:00'),
-(37, 73, 'zCF1C5CSVJzgbC6OgsuE9msuy1DHav', '2023-04-02 16:37:05');
+(163, 73, 'FpBBvAIrTVIJPdSXfwhxDIJjP4wrw2', '2023-04-04 20:41:06');
 
 -- --------------------------------------------------------
 
@@ -146,8 +154,17 @@ INSERT INTO `user` (`userId`, `name`, `password`, `email`, `username`) VALUES
 
 CREATE TABLE `usercourse` (
   `userId` int(11) NOT NULL,
-  `couseId` int(11) NOT NULL
+  `courseId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `usercourse`
+--
+
+INSERT INTO `usercourse` (`userId`, `courseId`) VALUES
+(72, 1),
+(73, 1),
+(73, 2);
 
 --
 -- Indizes der exportierten Tabellen
@@ -200,7 +217,7 @@ ALTER TABLE `user`
 -- Indizes für die Tabelle `usercourse`
 --
 ALTER TABLE `usercourse`
-  ADD PRIMARY KEY (`userId`,`couseId`);
+  ADD PRIMARY KEY (`userId`,`courseId`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -222,7 +239,7 @@ ALTER TABLE `cardEntry`
 -- AUTO_INCREMENT für Tabelle `course`
 --
 ALTER TABLE `course`
-  MODIFY `courseId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `courseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `courseEntry`
@@ -234,7 +251,7 @@ ALTER TABLE `courseEntry`
 -- AUTO_INCREMENT für Tabelle `session`
 --
 ALTER TABLE `session`
-  MODIFY `sessionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `sessionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
 --
 -- AUTO_INCREMENT für Tabelle `textEntry`
