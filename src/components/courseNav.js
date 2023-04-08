@@ -14,8 +14,15 @@ export default function CourseNav(ctx) {
                     authtoken: userData.authtoken,
                     userId: userData.userId
                 }).then((res) => {
-                    userData.courses = res.data;
-                    setCourses(1);
+                    if (res.data.error) {
+                        router.push({
+                            pathname: '/error',
+                            query: {error: res.data.error}
+                        },'/error');
+                    } else {
+                        userData.courses = res.data;
+                        setCourses(1);
+                    }
                 });
             } else if (ctx.courses === 0) { // waits for data (gets it in the next call)
 
@@ -46,12 +53,12 @@ export default function CourseNav(ctx) {
         } else {
             return <>
                 <courseNav>
-                    <div>
+                    <div className={"courseNavFind"}>
                         <h2>find courses</h2>
                         <input type="text" className={"courseNavInput"} placeholder={"search"}></input>
                     </div>
                     <br/>
-                    <div>
+                    <div className={"courseNavList"}>
                         <h2>my courses</h2>
                         Loading
                     </div>

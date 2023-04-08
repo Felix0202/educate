@@ -125,7 +125,7 @@ if ($_GET["loginUser"]) {
     }
     if (!$isReqOk) {
         $response = new stdClass();
-        $response->message = "didn´t work";
+        $response->error = "didn´t work";
         echo json_encode($response);
     }
 
@@ -165,7 +165,7 @@ if ($_GET["loginUser"]) {
             $isReqOk = true;
             $response = new stdClass();
             $response->message = "No courses yet!";
-            echo $response;
+            echo json_encode($response);
         }
     }
 
@@ -196,8 +196,8 @@ if ($_GET["loginUser"]) {
         if (!$isReqOk) {
             $isReqOk = true;
             $response = new stdClass();
-            $response->message = "Course not found!";
-            echo $response;
+            $response->message = "No entries Yet!";
+            echo json_encode($response);
         } else {
             echo json_encode($emparray);
         }
@@ -213,13 +213,13 @@ if ($_GET["loginUser"]) {
     // LOGGED IN BUT NO REQUEST ERROR
     if (!$isReqOk) {
         $response = new stdClass();
-        $response->message = "No Req!";
+        $response->error = "No Req!";
         echo json_encode($response);
     }
 // NOT LOGGED IN ERROR
 } else {
     $response = new stdClass();
-    $response->message = "Not Loggid in!";
+    $response->error = "Not Loggid in!";
     echo json_encode($response);
 }
 

@@ -22,7 +22,7 @@ export default function Course() {
         }
 
         let courseEntries;
-        if (course === 0) {
+        if (course === 0 || course !== requestedCourse) {
             axios.post('/api/loadCourse', {
                 authtoken: userData.authtoken,
                 userId: userData.userId,
@@ -31,31 +31,37 @@ export default function Course() {
                 courseEntries = res.data;
                 let entriesString = "";
 
-                console.log(courseEntries);
+                if (courseEntries.message) {
+                    entriesString = courseEntries.message;
+                } else if (courseEntries.error) {
+                    router.push({
+                        pathname: '/error',
+                        query: {error: courseEntries.error}
+                    },'/error');
+                } else {
+                    courseEntries.sort(function(a, b) {
+                        var keyA = new Date(a.creationDate),
+                            keyB = new Date(b.creationDate);
+                        // Compare the 2 dates
+                        if (keyA < keyB) return -1;
+                        if (keyA > keyB) return 1;
+                        return 0;
+                    });
 
-                courseEntries.sort(function(a, b) {
-                    var keyA = new Date(a.creationDate),
-                        keyB = new Date(b.creationDate);
-                    // Compare the 2 dates
-                    if (keyA < keyB) return -1;
-                    if (keyA > keyB) return 1;
-                    return 0;
-                });
-
-                console.log(courseEntries)
-
-                for (const entry of courseEntries) {
-                    if (entry.text) {
-                        if (entry.isHeadline == 1) {
-                            entriesString += `<div class="courseEntryHeadline">${entry.text}</div>`;
-                        } else {
-                            entriesString += `<div class="courseEntryText">${entry.text}</div>`;
+                    for (const entry of courseEntries) {
+                        if (entry.text) {
+                            if (entry.isHeadline == 1) {
+                                entriesString += `<div class="courseEntryHeadline">${entry.text}</div>`;
+                            } else {
+                                entriesString += `<div class="courseEntryText">${entry.text}</div>`;
+                            }
+                        } else if (entry.title) {
+                            entriesString += `<div class="courseEntryCard"><img class="courseCardIMG" src="../../indexCard.png" alt=""/>${entry.title}</div>`;
                         }
-                    } else if (entry.title) {
-                        entriesString += `<div class="courseEntryCard"><img class="courseCardIMG" src="../../indexCard.png" alt=""/>${entry.title}</div>`;
                     }
                 }
                 setEntries(entriesString);
+                setCourse(requestedCourse);
             });
         }
         return (
