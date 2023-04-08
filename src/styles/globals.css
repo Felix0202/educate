@@ -44,6 +44,8 @@
 
     --courseNav-box-width: 18vw;
     --courseNav-box-height: 89vh;
+    --courseNav-box-find-height: 17vh;
+    --courseNav-box-list-height: 70vh;
     --courseNav-box-margin: 2vh 1vw 2vh 1vw;
     --courseNav-box-padding: 1vw;
     --courseNav-box-radius: 1vw;
@@ -56,6 +58,9 @@
     --main-box-width: 75vw;
     --main-box-margin-top: 2vh;
 
+    --dash-header-font-size: 6vh;
+    --dash-header-height: 8vh;
+    --dash-main-height: 79vh;
     --dash-course-box-width: 35vw;
     --dash-course-box-height: 30vh;
     --dash-course-box-radius: 1vw;
@@ -63,6 +68,19 @@
     --dash-course-title-font-size: 5vh;
     --dash-course-info-font-size: 2.2vh;
     --dash-course-info-padding: 0.5vh;
+    --dash-course-margin: 2vh 0vw 2vh 0vw;
+
+    --course-title-font-size: 3vh;
+    --course-header-height: 18vh;
+    --course-main-height: 69vh;
+    --course-headline-font-size: 4vh;
+    --course-text-font-size: 2.2vh;
+    --course-card-font-size: 3vh;
+    --course-text-padding: 1vh 1vw 1vh 1vw;
+    --course-text-radius: 1vw;
+    --course-text-margin-top: 0.8vh;
+    --course-card-img: 2.8vh;
+    --course-card-img-margin-right: 1.2vh;
 }
 
 @font-face {
@@ -86,7 +104,7 @@ body {
     margin: 0px;
     background-color: var(--main-bg-color);
     color: var(--font-color-normal);
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 .main {
@@ -98,4 +116,8 @@ body {
 .mainBox {
     width: var(--main-box-width);
     margin-top: var(--main-box-margin-top);
+}
+
+.buttonNew{
+    color: var(--font-color-link);
 }

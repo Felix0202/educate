@@ -6,6 +6,9 @@ courseNav {
     padding: var(--courseNav-box-padding);
     border-radius: var(--courseNav-box-radius);
     font-size: var(--courseNav-title-font-size);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .courseNavInput {
@@ -26,5 +29,13 @@ courseNav {
     cursor: pointer;
     border-radius: var(--courseNav-entry-radius);
     margin-top: var(--courseNav-entry-margin);
+}
 
+.courseNavList{
+    overflow: scroll;
+    height: var(--courseNav-box-list-height);
+}
+
+.courseNavFind {
+    height: var(--courseNav-box-find-height);
 }

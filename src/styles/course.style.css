@@ -1,0 +1,42 @@
+.courseMain {
+    margin-top: var(--main-box-margin-top);
+    overflow: scroll;
+    height: var(--course-main-height);
+}
+
+.courseHeader {
+    background-color: var(--box1Level-bg-color);
+    padding: var(--course-text-padding);
+    border-radius: var(--course-text-radius);
+    font-size: var(--course-title-font-size);
+    height: var(--course-header-height);
+}
+
+.courseEntryHeadline {
+    color: var(--font-color-link);
+    font-size: var(--course-headline-font-size);
+    padding: var(--course-text-padding);
+}
+
+.courseEntryText {
+    background-color: var(--box2Level-bg-color);
+    font-size: var(--course-text-font-size);
+    padding: var(--course-text-padding);
+    border-radius: var(--course-text-radius);
+    margin-top: var(--course-text-margin-top);
+}
+
+.courseEntryCard {
+    background-color: var(--font-color-link);
+    padding: var(--course-text-padding);
+    width: fit-content;
+    border-radius: var(--course-text-radius);
+    font-size: var(--course-card-font-size);
+    margin-top: calc(var(--course-text-margin-top) * 3);
+}
+
+.courseCardIMG {
+    height: var(--course-card-img);
+    margin-right: var(--course-card-img-margin-right);
+    cursor: pointer;
+}

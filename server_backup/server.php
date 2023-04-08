@@ -132,6 +132,7 @@ if ($_GET["loginUser"]) {
 // LOGGED IN REQUESTS
 } else if (checkUserLoggedIn($conn)) {
     $isReqOk = false;
+    $postBody = json_decode(file_get_contents('php://input'));
 
     if ($_GET["getUsers"]) {
         $table = "user";
@@ -147,7 +148,6 @@ if ($_GET["loginUser"]) {
     }
 
     if ($_GET["loadCourses"]) {
-        $postBody = json_decode(file_get_contents('php://input'));
         $userId = $conn->real_escape_string($postBody->userId);
         $query = "SELECT courseId, title, note, DATE_FORMAT(creationDate, '%d.%m.%Y') 'creationDate' FROM usercourse join course using(courseId) WHERE userId = '$userId'";
         if ($result = $conn->query($query)) {
@@ -167,7 +167,40 @@ if ($_GET["loginUser"]) {
             $response->message = "No courses yet!";
             echo $response;
         }
+    }
 
+    if ($_GET["loadCourse"]) {
+        $courseId = $conn->real_escape_string($postBody->courseId);
+        $query = "SELECT * FROM courseEntry join cardEntry using (entryId) WHERE courseId = '$courseId'";
+        $emparray = array();
+        if ($result = $conn->query($query)) {
+            if ($result->num_rows != 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $emparray[] = $row;
+                    $isReqOk = true;
+                }
+            }
+        }
+
+        $query = "SELECT * FROM courseEntry join textEntry using (entryId) WHERE courseId = '$courseId'";
+        if ($result = $conn->query($query)) {
+            if ($result->num_rows != 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $emparray[] = $row;
+                    $isReqOk = true;
+                }
+
+            }
+        }
+
+        if (!$isReqOk) {
+            $isReqOk = true;
+            $response = new stdClass();
+            $response->message = "Course not found!";
+            echo $response;
+        } else {
+            echo json_encode($emparray);
+        }
     }
 
     if ($_GET["isLoggedIn"]) {

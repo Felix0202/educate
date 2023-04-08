@@ -3,6 +3,16 @@
     flex-wrap: wrap;
     justify-content: space-between;
     margin-top: var(--main-box-margin-top);
+    overflow: scroll;
+    height: var(--dash-main-height);
+}
+
+.dashHeader {
+    height: var(--dash-header-height);
+    font-size: var(--dash-header-font-size);
+    padding: var(--dash-course-box-padding);
+    display: flex;
+    justify-content: space-between;
 }
 
 .dashCourse {
@@ -12,6 +22,8 @@
     height: var(--dash-course-box-height);
     border-radius: var(--dash-course-box-radius);
     padding: var(--dash-course-box-padding);
+    margin: var(--dash-course-margin);
+    cursor: pointer;
 }
 
 .dashCourse > h2 {
