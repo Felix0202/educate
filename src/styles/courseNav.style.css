@@ -13,7 +13,7 @@ courseNav {
 
 .courseNavInput {
     background-color: var(--box2Level-bg-color);
-    color: var(--font-color-normal);
+    color: var(--color-normal);
     width: 100%;
     font-size: var(--courseNav-font-size);
     margin-top: var(--courseNav-entry-margin);

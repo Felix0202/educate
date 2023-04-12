@@ -15,7 +15,7 @@ export default function Authentication() {
     const router = useRouter();
 
     const logIn = () => {
-        userData.userName = document.getElementById('userName').value;
+        userData.userName = document.getElementById('userName').value.trim();
         userData.password = document.getElementById('password').value;
 
         axios.post('/api/login', {
@@ -29,8 +29,10 @@ export default function Authentication() {
                 delete userData['password'];
                 router.push('/dashboard');
             } else {
-                console.log(res.data);
-                console.log("Not worked");
+                router.push({
+                    pathname: '/error',
+                    query: {error: res.data.message}
+                },'/error');
             }
         })
     }
@@ -40,10 +42,10 @@ export default function Authentication() {
     }
 
     const signUp = () => {
-        userData.userName = document.getElementById('userName').value;
-        userData.email = document.getElementById('eMail').value;
-        userData.password = document.getElementById('password').value;
-        userData.name = document.getElementById('name').value;
+        userData.userName = document.getElementById('userName').value.trim();
+        userData.email = document.getElementById('eMail').value.trim();
+        userData.password = document.getElementById('password');
+        userData.name = document.getElementById('name').value.trim();
 
         // req to server.js
         axios.post('/api/newUser', {
@@ -59,8 +61,10 @@ export default function Authentication() {
                 console.log(userData);
                 router.push('/dashboard');
             } else {
-                console.log(res.data);
-                console.log("Not worked");
+                router.push({
+                    pathname: '/error',
+                    query: {error: res.data.message}
+                },'/error');
             }
         })
     }

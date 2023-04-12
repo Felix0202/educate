@@ -10,10 +10,12 @@
     border-radius: var(--course-text-radius);
     font-size: var(--course-title-font-size);
     height: var(--course-header-height);
+    display: flex;
+    justify-content: space-between;
 }
 
 .courseEntryHeadline {
-    color: var(--font-color-link);
+    color: var(--color-light);
     font-size: var(--course-headline-font-size);
     padding: var(--course-text-padding);
 }
@@ -27,16 +29,50 @@
 }
 
 .courseEntryCard {
-    background-color: var(--font-color-link);
+    background-color: var(--color-dark);
     padding: var(--course-text-padding);
     width: fit-content;
     border-radius: var(--course-text-radius);
     font-size: var(--course-card-font-size);
     margin-top: calc(var(--course-text-margin-top) * 3);
+    cursor: pointer;
+}
+
+.courseEntryCard:hover {
+    background-color: var(--color-light);
 }
 
 .courseCardIMG {
     height: var(--course-card-img);
     margin-right: var(--course-card-img-margin-right);
+}
+
+.courseButtonEdit {
+    background-color: var(--color-dark);
+    height: var(--course-edit-button-height);
+    width: var(--course-edit-button-width);
+    margin: var(--course-edit-button-margin);
+    border-radius: var(--course-edit-button-radius);
     cursor: pointer;
+}
+
+.courseButtonEdit:hover {
+    background-color: var(--color-light);
+}
+
+.courseButtonEdit > img {
+    width: 80%;
+    height: 80%;
+    position: relative;
+    left: 52%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+}
+
+.courseMessage {
+    color: var(--color-dark);
+    font-size: var(--course-text-font-size);
+    padding: var(--course-text-padding);
+    border-radius: var(--course-text-radius);
+    margin-top: var(--course-text-margin-top);
 }

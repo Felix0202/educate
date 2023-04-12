@@ -32,7 +32,7 @@ export default function Course() {
                 let entriesString = "";
 
                 if (courseEntries.message) {
-                    entriesString = courseEntries.message;
+                    entriesString = `<p class="courseMessage">${courseEntries.message}</p>`;
                 } else if (courseEntries.error) {
                     router.push({
                         pathname: '/error',
@@ -47,7 +47,6 @@ export default function Course() {
                         if (keyA > keyB) return 1;
                         return 0;
                     });
-
                     for (const entry of courseEntries) {
                         if (entry.text) {
                             if (entry.isHeadline == 1) {
@@ -71,9 +70,16 @@ export default function Course() {
                     <CourseNav></CourseNav>
                     <div className={"mainBox"}>
                         <div className={"courseHeader"}>
-                            <h1>{courseData.title}</h1>
-                            <p>Note: {courseData.note}</p>
-                            <p>Created on: {courseData.creationDate}</p>
+                            <div>
+                                <h1>{courseData.title}</h1>
+                                <p>Note: {courseData.note}</p>
+                                <p>Created on: {courseData.creationDate}</p>
+                            </div>
+                            <div>
+                                <div className={"courseButtonEdit"}>
+                                    <img src="../../edit.svg" alt="EDIT"/>
+                                </div>
+                            </div>
                         </div>
 
                         <div className={"courseMain"} dangerouslySetInnerHTML={{__html: entries}}>

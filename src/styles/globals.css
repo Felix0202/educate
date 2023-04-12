@@ -1,9 +1,9 @@
 :root {
     --font-family: Inter;
 
-    --font-color-normal: white;
-    --font-color-link: #4ECDC4;
-    --font-color-hover: #33575A;
+    --color-normal: white;
+    --color-light: #4ECDC4;
+    --color-dark: #33575A;
 
     --main-bg-color: #292F36;
     --header-bg-color: #1E1E1E;
@@ -16,6 +16,13 @@
 
     --button-bg-color: #4ECDC4;
     --input-bg-color: #1E1E1E;
+
+
+    --error-box-width: 55vw;
+    --error-box-height: 40vh;
+    --error-box-radius: 1vh;
+    --error-box-padding: 2vh 2vw 2vh 2vw;
+    --error-box-font-size: 3vh;
 
     --header-height: 7vh;
     --header-heigh-font: 3.5vh;
@@ -72,6 +79,10 @@
 
     --course-title-font-size: 3vh;
     --course-header-height: 18vh;
+    --course-edit-button-height: 6vh;
+    --course-edit-button-width: 6vh;
+    --course-edit-button-radius: 1vh;
+    --course-edit-button-margin: 0vh 0vw 0vh 1vw;
     --course-main-height: 69vh;
     --course-headline-font-size: 4vh;
     --course-text-font-size: 2.2vh;
@@ -103,7 +114,7 @@ body {
     padding: 0px;
     margin: 0px;
     background-color: var(--main-bg-color);
-    color: var(--font-color-normal);
+    color: var(--color-normal);
     overflow: hidden;
 }
 
@@ -119,5 +130,22 @@ body {
 }
 
 .buttonNew{
-    color: var(--font-color-link);
+    color: var(--color-light);
+}
+
+.errorBox {
+    width: var(--error-box-width);
+    height: var(--error-box-height);
+    background-color: var(--box1Level-bg-color);
+    padding: var(--error-box-padding);
+    border-radius: var(--error-box-radius);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: var(--error-box-font-size);
+}
+
+.errorMessage {
+    color: var(--color-light);
 }

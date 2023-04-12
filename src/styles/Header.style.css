@@ -17,12 +17,12 @@ header > div {
 
 .headerTitle {
     font-size: var(--header-heigh-font);
-    color: var(--font-color-link);
+    color: var(--color-light);
     cursor: default;
 }
 
 .headerTitleE {
-    color: var(--font-color-normal);
+    color: var(--color-normal);
 }
 
 .headerNav {
@@ -34,14 +34,14 @@ header > div {
 }
 
 .headerLink {
-    color: var(--font-color-link);
+    color: var(--color-light);
     font-size: var(--header-height-font-link);
     padding: var(--header-height-font-link-padding);
     cursor: pointer;
 }
 
 .headerLink:hover {
-    color: var(--font-color-hover);
+    color: var(--color-dark);
 }
 
 .headerButton {
@@ -56,7 +56,7 @@ header > div {
 }
 
 .headerButton:hover {
-    color: var(--font-color-hover);
+    color: var(--color-dark);
 }
 
 .headerLogIn {
@@ -65,17 +65,18 @@ header > div {
 }
 
 .headerLogIn:hover {
-    background-color: var(--font-color-hover);
+    background-color: var(--color-light);
     color: white;
 }
 
 .headerSignIn {
-    background-color: var(--font-color-link);
+    background-color: var(--color-dark);
     color: white;
 }
 
 .headerSignIn:hover {
-    color: var(--font-color-hover);
+    background-color: var(--color-light);
+    color: white;
 }
 
 .headerAccount {
@@ -87,14 +88,14 @@ header > div {
     border-radius: var(--header-button-radius);
     text-align: center;
     cursor: pointer;
-    background-color: var(--font-color-link);
+    background-color: var(--color-dark);
     color: white;
     display: flex;
     justify-content: space-between;
 }
 
 .headerAccount:hover {
-    color: var(--font-color-hover);
+    background-color: var(--color-light);
 }
 
 #headerSettings{

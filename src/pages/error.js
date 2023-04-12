@@ -1,5 +1,4 @@
 import Header from '../components/header';
-import {loggedIn, userData} from "@/pages/authentication";
 import {useRouter} from "next/router";
 
 export default function Error() {
@@ -8,10 +7,12 @@ export default function Error() {
     return (
         <>
             <Header></Header>
-            <div>
+            <div className={"errorBox"}>
                 <h2>Error occurred while loading!</h2>
-                <p>Error Message: {router.query.error}</p>
-                <p>Pleasy reload the page and try again later!</p>
+                <hr/><br/>
+                <p>Error Message: <span className={"errorMessage"}>{router.query.error}</span></p>
+                <br/>
+                <p>Please reload / try again later!</p>
             </div>
         </>
     )

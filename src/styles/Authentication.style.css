@@ -31,7 +31,7 @@
 }
 
 .authButton:hover{
-    background-color: var(--font-color-hover);
+    background-color: var(--color-dark);
 }
 
 .authLink{
@@ -39,7 +39,7 @@
 }
 
 .authLink:hover{
-    color: var(--font-color-hover);
+    color: var(--color-dark);
 }
 
 .authInput {
@@ -49,5 +49,5 @@
     background-color: var(--input-bg-color);
     border: 0px solid;
     border-radius: var(--auth-input-radius);
-    color: var(--font-color-normal);
+    color: var(--color-normal);
 }
