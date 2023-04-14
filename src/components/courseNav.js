@@ -3,6 +3,23 @@ import axios from "axios";
 import {useState} from "react";
 import {useRouter} from "next/router";
 
+export async function loadCourses() {
+    axios.post('/api/loadCourses', {
+        authtoken: userData.authtoken,
+        userId: userData.userId
+    }).then((res) => {
+        if (res.data.error) {
+            router.push({
+                pathname: '/error',
+                query: {error: res.data.error}
+            }, '/error');
+        } else {
+            userData.courses = res.data;
+            return 1;
+        }
+    });
+}
+
 export default function CourseNav(ctx) {
     if (loggedIn) {
         const [courses, setCourses] = useState(0);
@@ -10,19 +27,8 @@ export default function CourseNav(ctx) {
 
         if (courses === 0) {
             if (ctx.courses === undefined) { // loads data (from server)
-                axios.post('/api/loadCourses', {
-                    authtoken: userData.authtoken,
-                    userId: userData.userId
-                }).then((res) => {
-                    if (res.data.error) {
-                        router.push({
-                            pathname: '/error',
-                            query: {error: res.data.error}
-                        },'/error');
-                    } else {
-                        userData.courses = res.data;
-                        setCourses(1);
-                    }
+                loadCourses().then((res) => {
+                    setCourses(1);
                 });
             } else if (ctx.courses === 0) { // waits for data (gets it in the next call)
 
@@ -34,7 +40,7 @@ export default function CourseNav(ctx) {
 
         if (courses === 1) {
             return <>
-                <courseNav>
+                <div className={"courseNav"}>
                     <div className={"courseNavFind"}>
                         <h2>find courses</h2>
                         <input type="text" className={"courseNavInput"} placeholder={"search"}></input>
@@ -42,17 +48,18 @@ export default function CourseNav(ctx) {
                     <div>
                         <h2>my courses</h2>
                         <div className={"courseNavList"}>
-                            {userData.courses.map((course) => <div className={"courseNavCourse"} onClick={(e) => router.push({
-                                pathname: '/course',
-                                query: {courseId: course.courseId}
-                            }, '/course')}><p>{course.title}</p></div>)}
+                            {userData.courses.map((course) => <div className={"courseNavCourse"}
+                                                                   onClick={(e) => router.push({
+                                                                       pathname: '/course',
+                                                                       query: {courseId: course.courseId}
+                                                                   }, '/course')}><p>{course.title}</p></div>)}
                         </div>
                     </div>
-                </courseNav>
+                </div>
             </>
         } else {
             return <>
-                <courseNav>
+                <div className={"courseNav"}>
                     <div className={"courseNavFind"}>
                         <h2>find courses</h2>
                         <input type="text" className={"courseNavInput"} placeholder={"search"}></input>
@@ -62,7 +69,7 @@ export default function CourseNav(ctx) {
                         <h2>my courses</h2>
                         Loading
                     </div>
-                </courseNav>
+                </div>
             </>
         }
 

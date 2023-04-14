@@ -6,6 +6,6 @@ export default async function handler(req, res) {
         res.status(200).json(data.data)
     } catch (error) {
         console.error(error);
-        res.status(200).json({message: "Server Problems!"})
+        res.status(200).json({error: "Server Problems!"})
     }
 }

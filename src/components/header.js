@@ -35,7 +35,7 @@ export default function header() {
                     <div className={"headerNav"}>
                         <Link className={"headerLink"} href="../">ABOUT</Link>
                         <Link className={"headerLink"} href="../dashboard">DASHBOARD</Link>
-                        <Link className={"headerLogIn headerButton"}  href={{
+                        <Link className={"headerLogIn headerButton"} href={{
                             pathname: '/authentication',
                             query: {authMethod: 1}
                         }}>LOG IN

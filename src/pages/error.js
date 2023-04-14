@@ -9,7 +9,8 @@ export default function Error() {
             <Header></Header>
             <div className={"errorBox"}>
                 <h2>Error occurred while loading!</h2>
-                <hr/><br/>
+                <hr/>
+                <br/>
                 <p>Error Message: <span className={"errorMessage"}>{router.query.error}</span></p>
                 <br/>
                 <p>Please reload / try again later!</p>

@@ -30,7 +30,7 @@ export default function Dashboard() {
                     router.push({
                         pathname: '/error',
                         query: {error: res.data.error}
-                    },'/error');
+                    }, '/error');
                 } else {
                     userData.courses = res.data;
                     let output = "";
@@ -56,18 +56,39 @@ export default function Dashboard() {
                         <div className={"mainBox"}>
                             <div className={"dashHeader"}>
                                 <p>Dashboard</p>
-                                <p className={"buttonNew"}>+</p>
+                                <p className={"buttonNew"} onClick={() => {
+                                    axios.post('/api/newCourse', {
+                                        authtoken: userData.authtoken,
+                                        userId: userData.userId,
+                                    }).then((res) => {
+                                        if (res.data.error) {
+                                            router.push({
+                                                pathname: '/error',
+                                                query: {error: res.data.error}
+                                            }, '/error');
+                                        } else {
+                                            router.push({
+                                                pathname: '/course',
+                                                query: {
+                                                    courseId: res.data,
+                                                    newCourse: true
+                                                }
+                                            }, '/course');
+                                        }
+                                    })
+                                }}>+</p>
                             </div>
                             <div className={"dashMain"}>
-                                {userData.courses.map((course) => <div className={"dashCourse"} onClick={(e) => router.push({
-                                    pathname: '/course',
-                                    query: {courseId: course.courseId}
-                                }, '/course')}>
+                                {userData.courses.map((course) => <div className={"dashCourse"}
+                                                                       onClick={(e) => router.push({
+                                                                           pathname: '/course',
+                                                                           query: {courseId: course.courseId}
+                                                                       }, '/course')}>
                                     <h2>{course.title}</h2>
                                     <p>Note: {course.note}</p>
                                     <p>{course.creationDate}</p>
 
-                                    </div>)}
+                                </div>)}
                             </div>
                         </div>
                     </div>

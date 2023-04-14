@@ -1,4 +1,4 @@
-courseNav {
+.courseNav {
     background-color: var(--boxInfo1Level-bg-color);
     width: var(--courseNav-box-width);
     height: var(--courseNav-box-height);
@@ -29,6 +29,11 @@ courseNav {
     cursor: pointer;
     border-radius: var(--courseNav-entry-radius);
     margin-top: var(--courseNav-entry-margin);
+    transition: 0.5s ease;
+}
+
+.courseNavCourse:hover {
+    background-color: var(--box1Level-bg-color);
 }
 
 .courseNavList{

@@ -31,8 +31,8 @@ export default function Authentication() {
             } else {
                 router.push({
                     pathname: '/error',
-                    query: {error: res.data.message}
-                },'/error');
+                    query: {error: res.data.error}
+                }, '/error');
             }
         })
     }
@@ -63,8 +63,8 @@ export default function Authentication() {
             } else {
                 router.push({
                     pathname: '/error',
-                    query: {error: res.data.message}
-                },'/error');
+                    query: {error: res.data.error}
+                }, '/error');
             }
         })
     }
@@ -143,7 +143,7 @@ export default function Authentication() {
                         pathname: '/authentication',
                         query: {authMethod: 2}
                     }, '/authentication')}>Create one</span></p>
-                    <p><span className={"authLink"}onClick={(e) => router.push({
+                    <p><span className={"authLink"} onClick={(e) => router.push({
                         pathname: '/authentication',
                         query: {authMethod: 3}
                     }, '/authentication')}>Forgot Username/Password?</span></p>

@@ -196,7 +196,7 @@ if ($_GET["loginUser"]) {
         if (!$isReqOk) {
             $isReqOk = true;
             $response = new stdClass();
-            $response->message = "No entries yet ...";
+            $response->message = "No entries Yet!";
             echo json_encode($response);
         } else {
             echo json_encode($emparray);

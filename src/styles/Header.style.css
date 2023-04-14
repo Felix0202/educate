@@ -53,6 +53,7 @@ header > div {
     border-radius: var(--header-button-radius);
     text-align: center;
     cursor: pointer;
+    transition: 0.5s ease;
 }
 
 .headerButton:hover {
@@ -92,6 +93,7 @@ header > div {
     color: white;
     display: flex;
     justify-content: space-between;
+    transition: 0.5s ease;
 }
 
 .headerAccount:hover {
