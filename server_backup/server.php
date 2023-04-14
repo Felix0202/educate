@@ -134,6 +134,7 @@ if ($_GET["loginUser"]) {
     $isReqOk = false;
     $postBody = json_decode(file_get_contents('php://input'));
 
+// just for testing
     if ($_GET["getUsers"]) {
         $table = "user";
         $query = "SELECT userId, username, name, email, password FROM $table";
@@ -170,36 +171,73 @@ if ($_GET["loginUser"]) {
     }
 
     if ($_GET["loadCourse"]) {
+        $userId = $conn->real_escape_string($postBody->userId);
         $courseId = $conn->real_escape_string($postBody->courseId);
-        $query = "SELECT * FROM courseEntry join cardEntry using (entryId) WHERE courseId = '$courseId'";
-        $emparray = array();
+        $query = "SELECT * FROM usercourse WHERE userId = '$userId' AND courseId = '$courseId'";
         if ($result = $conn->query($query)) {
             if ($result->num_rows != 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $emparray[] = $row;
-                    $isReqOk = true;
-                }
-            }
-        }
-
-        $query = "SELECT * FROM courseEntry join textEntry using (entryId) WHERE courseId = '$courseId'";
-        if ($result = $conn->query($query)) {
-            if ($result->num_rows != 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $emparray[] = $row;
-                    $isReqOk = true;
+                $query = "SELECT * FROM courseEntry join cardEntry using (entryId) WHERE courseId = '$courseId'";
+                $emparray = array();
+                if ($result = $conn->query($query)) {
+                    if ($result->num_rows != 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $emparray[] = $row;
+                            $isReqOk = true;
+                        }
+                    }
                 }
 
+                $query = "SELECT * FROM courseEntry join textEntry using (entryId) WHERE courseId = '$courseId'";
+                if ($result = $conn->query($query)) {
+                    if ($result->num_rows != 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $emparray[] = $row;
+                            $isReqOk = true;
+                        }
+
+                    }
+                }
+
+                if (!$isReqOk) {
+                    $isReqOk = true;
+                    $response = new stdClass();
+                    $response->message = "No entries yet ...";
+                    echo json_encode($response);
+                } else {
+                    echo json_encode($emparray);
+                }
+            } else {
+                $isReqOk = true;
+                $response = new stdClass();
+                $response->error = "You do not have Access to this Course!";
+                echo json_encode($response);
             }
         }
+    }
+
+    if ($_GET["newCourse"]) {
+        $userId = $conn->real_escape_string($postBody->userId);
+        try {
+            $conn->begin_transaction();
+            $query = "INSERT INTO course(title, note, creationDate, isPublic) VALUES ('New Course',' nothing',current_timestamp(),'1')";
+            $conn->query($query);
+            $courseId = mysqli_insert_id($conn);
+            $query = "INSERT INTO usercourse(userId, courseId) VALUES ('{$userId}','$courseId')";
+            $conn->query($query);
+        } catch (Exception $exception) {
+            $conn->rollback();
+        }
+        if ($conn->commit()) {
+            $isReqOk = true;
+            echo json_encode($courseId);
+        }
+
 
         if (!$isReqOk) {
             $isReqOk = true;
             $response = new stdClass();
-            $response->message = "No entries yet ...";
+            $response->error = "Create course not possible";
             echo json_encode($response);
-        } else {
-            echo json_encode($emparray);
         }
     }
 
