@@ -28,6 +28,8 @@ export default function Authentication() {
                 console.log(userData)
                 delete userData['password'];
                 router.push('/dashboard');
+            } else if (res.data.message){
+                document.getElementById("authMessage").innerHTML = `<p style="color: red">${res.data.message}</p><br>`;
             } else {
                 router.push({
                     pathname: '/error',
@@ -60,6 +62,8 @@ export default function Authentication() {
                 delete userData['password'];
                 console.log(userData);
                 router.push('/dashboard');
+            } else if (res.data.message){
+                document.getElementById("authMessage").innerHTML = `<p style="color: red">${res.data.message}</p><br>`;
             } else {
                 router.push({
                     pathname: '/error',
@@ -92,6 +96,7 @@ export default function Authentication() {
                         <p className={"authLabel"}>Password:</p>
                         <input className={"authInput"} id={'password'} type="password"/>
                         <br/><br/><br/>
+                        <div id={"authMessage"}></div>
                         <div className={"authButton"} id={"submitButton"} onClick={() => {
                             signUp();
                         }}>
@@ -114,6 +119,7 @@ export default function Authentication() {
                     <p className={"authLabel"}>Email:</p>
                     <input className={"authInput"} id={'eMail'} type="text"/>
                     <br/><br/>
+                    <div id={"authMessage"}></div>
                     <div className={"authButton"} id={"submitButton"} onClick={() => {
                         forgotAuth();
                     }}>
@@ -134,6 +140,7 @@ export default function Authentication() {
                     <p className={"authLabel"}>Password:</p>
                     <input className={"authInput"} id={'password'} type="password"/>
                     <br/><br/><br/>
+                    <div id={"authMessage"}></div>
                     <div className={"authButton"} id={"submitButton"} onClick={() => {
                         logIn();
                     }}>

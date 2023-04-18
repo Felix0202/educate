@@ -4,14 +4,37 @@ import {loggedIn, userData} from "@/pages/authentication";
 import {useRouter} from "next/router";
 import axios from "axios";
 import {useState} from "react";
+import {log} from "next/dist/server/typescript/utils";
 
 export default function Course() {
     const router = useRouter();
     const [course, setCourse] = useState(0);
     const [entries, setEntries] = useState("loading");
 
-
     if (loggedIn) {
+
+        const setUserCourse = (userJoins) => {
+            console.log(userJoins);
+            axios.post('/api/setUserCourse', {
+                authtoken: userData.authtoken,
+                userId: userData.userId,
+                courseId: requestedCourse,
+                userJoins: userJoins // if 1 user joins course - if 0 user leaves the course
+            }).then((res) => {
+                console.log(res.data);
+                if (res.data.error) {
+                    router.push({
+                        pathname: '/error',
+                        query: {error: res.data.error}
+                    }, '/error');
+                } else {
+                    router.push({
+                        pathname: '/dashboard',
+                    }, '/dashboard');
+                }
+            });
+        }
+
         let requestedCourse = router.query.courseId;
 
         // if new course is created
@@ -28,11 +51,16 @@ export default function Course() {
                     }, '/error');
                 } else {
                     userData.courses = res.data;
+
                     // push to same page but without newCourse query
-                    router.push({
-                        pathname: '/course',
-                        query: {courseId: requestedCourse}
-                    }, '/course');
+                    for (const course of userData.courses) {
+                        if (course.courseId == requestedCourse) {
+                            router.push({
+                                pathname: '/course',
+                                query: {courseId: requestedCourse, courseData: JSON.stringify(course)}
+                            }, '/course');
+                        }
+                    }
                 }
             });
             return <>
@@ -44,14 +72,8 @@ export default function Course() {
                 </div>
             </>
         } else {
-            let courseData;
-
-            // get requestedCourseData from userData.couses (already loaded - from dashboard)
-            for (const course of userData.courses) {
-                if (course.courseId == requestedCourse) {
-                    courseData = course;
-                }
-            }
+            // get courseData from router -> already loaded (dashboard/course)
+            let courseData = JSON.parse(router.query.courseData);
 
             let courseEntries;
             // if no couse is open yet or the requestedCourse is not the current one
@@ -97,6 +119,26 @@ export default function Course() {
                     setCourse(requestedCourse);
                 });
             }
+
+            let userJoinedCourse = false;
+            console.log(userData.courses);
+            if (userData.courses.message) {
+
+            } else if (userData.courses) {
+                for (const course of userData.courses) {
+                    if (course.courseId === requestedCourse) {
+                        if (course.isOwner !== "1") {
+                            userJoinedCourse = true;
+                        } else {
+                            userJoinedCourse = null;
+                        }
+                        break;
+                    }
+                }
+            } else {
+
+            }
+
             return (
                 <>
                     <Header></Header>
@@ -110,9 +152,26 @@ export default function Course() {
                                     <p>Created on: {courseData.creationDate}</p>
                                 </div>
                                 <div>
-                                    <div className={"courseButtonEdit"}>
-                                        <img src="../../edit.svg" alt="EDIT"/>
-                                    </div>
+                                    {
+                                        courseData.isOwner === "1" ? <>
+                                            <div className={"courseButtonEdit"}>
+                                                <img src="../../edit.svg" alt="EDIT"/>
+                                            </div>
+                                        </> : <></>
+                                    }
+                                    {
+                                        userJoinedCourse !== null ? userJoinedCourse === true ? <>
+                                            <div id={"courseJoinLeaveButton"} onClick={() => {
+                                                setUserCourse(0);
+                                            }}>LEAVE
+                                            </div>
+                                        </> : <>
+                                            <div id={"courseJoinLeaveButton"} onClick={() => {
+                                                setUserCourse(1);
+                                            }}>JOIN
+                                            </div>
+                                        </> : <></>
+                                    }
                                 </div>
                             </div>
 

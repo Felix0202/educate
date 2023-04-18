@@ -16,7 +16,9 @@
 
     --button-bg-color: #4ECDC4;
     --input-bg-color: #1E1E1E;
-
+    --button-join-font-size: 3.5vh;
+    --button-join-padding: 1vh 1vw 1vh 1vw;
+    --button-join-radius: 1vh;
 
     --error-box-width: 55vw;
     --error-box-height: 40vh;
@@ -76,6 +78,7 @@
     --dash-course-info-font-size: 2.2vh;
     --dash-course-info-padding: 0.5vh;
     --dash-course-margin: 2vh 0vw 2vh 0vw;
+    --dash-course-button-margin-bottom: 1vh;
 
     --course-title-font-size: 3vh;
     --course-header-height: 18vh;
@@ -83,6 +86,7 @@
     --course-edit-button-width: 6vh;
     --course-edit-button-radius: 1vh;
     --course-edit-button-margin: 0vh 0vw 0vh 1vw;
+    --course-button-padding: 1.25vh 1vw 1.25vh 1vw;
     --course-main-height: 69vh;
     --course-headline-font-size: 4vh;
     --course-text-font-size: 2.2vh;
@@ -129,8 +133,13 @@ body {
     margin-top: var(--main-box-margin-top);
 }
 
-.buttonNew{
+.buttonAction {
     color: var(--color-light);
+    cursor: pointer;
+}
+
+.buttonAction:hover {
+    color: var(--color-dark)
 }
 
 .errorBox {
@@ -148,4 +157,13 @@ body {
 
 .errorMessage {
     color: var(--color-light);
+}
+
+.buttonJoin {
+    background-color: var(--color-dark);
+    color: white;
+    font-size: var(--button-join-font-size);
+    padding: var(--button-join-padding);
+    width: fit-content;
+    border-radius: var(--button-join-radius);
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 06. Apr 2023 um 10:45
+-- Erstellungszeit: 18. Apr 2023 um 18:12
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.2.0
 
@@ -42,8 +42,16 @@ CREATE TABLE `card` (
 
 CREATE TABLE `cardEntry` (
   `cardEntryId` int(11) NOT NULL,
-  `entryId` int(11) NOT NULL
+  `entryId` int(11) NOT NULL,
+  `title` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `cardEntry`
+--
+
+INSERT INTO `cardEntry` (`cardEntryId`, `entryId`, `title`) VALUES
+(1, 2, 'test');
 
 -- --------------------------------------------------------
 
@@ -79,6 +87,14 @@ CREATE TABLE `courseEntry` (
   `courseId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Daten für Tabelle `courseEntry`
+--
+
+INSERT INTO `courseEntry` (`entryId`, `creationDate`, `courseId`) VALUES
+(1, '2023-04-06 11:27:05', 1),
+(2, '2023-04-06 11:28:00', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -98,7 +114,9 @@ CREATE TABLE `session` (
 
 INSERT INTO `session` (`sessionId`, `userId`, `authtoken`, `lastLogin`) VALUES
 (23, 72, 'iEtENdVtPBQ1UI7Gs1fuqXMKKiI8Fq', '2023-04-02 16:18:00'),
-(163, 73, 'FpBBvAIrTVIJPdSXfwhxDIJjP4wrw2', '2023-04-04 20:41:06');
+(440, 1, 'J2oGoBAGMUrmxtLmSWVw5lSE2gYgsl', '2023-04-18 16:19:15'),
+(489, 73, 'etBgrySaNt6p2yOfgmaKndlsX7Of3X', '2023-04-18 18:11:38'),
+(490, 70, 'yzAGJmdvAj2FErXZ3OX36Qo18rLOua', '2023-04-18 18:11:52');
 
 -- --------------------------------------------------------
 
@@ -110,8 +128,16 @@ CREATE TABLE `textEntry` (
   `textEntryId` int(11) NOT NULL,
   `entryId` int(11) NOT NULL,
   `text` varchar(1000) NOT NULL,
-  `isHeadline` datetime NOT NULL
+  `isHeadline` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `textEntry`
+--
+
+INSERT INTO `textEntry` (`textEntryId`, `entryId`, `text`, `isHeadline`) VALUES
+(1, 1, 'test Headline', 1),
+(2, 1, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.', 0);
 
 -- --------------------------------------------------------
 
@@ -154,17 +180,17 @@ INSERT INTO `user` (`userId`, `name`, `password`, `email`, `username`) VALUES
 
 CREATE TABLE `usercourse` (
   `userId` int(11) NOT NULL,
-  `courseId` int(11) NOT NULL
+  `courseId` int(11) NOT NULL,
+  `isOwner` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Daten für Tabelle `usercourse`
 --
 
-INSERT INTO `usercourse` (`userId`, `courseId`) VALUES
-(72, 1),
-(73, 1),
-(73, 2);
+INSERT INTO `usercourse` (`userId`, `courseId`, `isOwner`) VALUES
+(73, 1, 0),
+(73, 2, 1);
 
 --
 -- Indizes der exportierten Tabellen
@@ -233,31 +259,31 @@ ALTER TABLE `card`
 -- AUTO_INCREMENT für Tabelle `cardEntry`
 --
 ALTER TABLE `cardEntry`
-  MODIFY `cardEntryId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cardEntryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `course`
 --
 ALTER TABLE `course`
-  MODIFY `courseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `courseId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT für Tabelle `courseEntry`
 --
 ALTER TABLE `courseEntry`
-  MODIFY `entryId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `entryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `session`
 --
 ALTER TABLE `session`
-  MODIFY `sessionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
+  MODIFY `sessionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=491;
 
 --
 -- AUTO_INCREMENT für Tabelle `textEntry`
 --
 ALTER TABLE `textEntry`
-  MODIFY `textEntryId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `textEntryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `user`

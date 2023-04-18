@@ -10,18 +10,64 @@ export default function Dashboard() {
     const [courses, setCourses] = useState(0);
     const [coursesNav, setCoursesNav] = useState(0);
 
-    const example = () => {
-        axios.post('/api/checkLoggedIn', {
-            authtoken: userData.authtoken,
-            userId: userData.userId
-        })
-            .then((res) => {
-                console.log(res.data);
-            });
-    }
-
     if (loggedIn) {
-        if (courses === 0) {
+        let searchText = router.query.searchText || "";
+        if (router.query.publicCourses && router.query.searchText) { // if search is active
+            let publicCourses = JSON.parse(router.query.publicCourses);
+            if (publicCourses.message) { // if no public courses were found
+                return <>
+                    <Header></Header>
+                    <div className={"main"}>
+                        <CourseNav courses={coursesNav} searchText={searchText}></CourseNav>
+                        <div className={"mainBox"}>
+                            <div className={"dashHeader"}>
+                                <p>Search for "{router.query.searchText}"</p>
+                                <p className={"buttonAction"} onClick={() => {
+                                    router.push({
+                                        pathname: '/dashboard',
+                                    }, '/dashboard');
+                                }}>
+                                    x
+                                </p>
+                            </div>
+                            <div className={"dashMain"}>
+                                <p className={"courseMessage"}>{publicCourses.message}</p>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            } else { // print public courses
+                return <>
+                    <Header></Header>
+                    <div className={"main"}>
+                        <CourseNav courses={coursesNav} searchText={searchText}></CourseNav>
+                        <div className={"mainBox"}>
+                            <div className={"dashHeader"}>
+                                <p>Search for "{router.query.searchText}"</p>
+                                <p className={"buttonAction"} onClick={() => {
+                                    router.push({
+                                        pathname: '/dashboard',
+                                    }, '/dashboard');
+                                }}>
+                                    x
+                                </p>
+                            </div>
+                            <div className={"dashMain"}>
+                                {publicCourses.map((course) => <div className={"dashCourse"}
+                                                                    onClick={(e) => router.push({
+                                                                        pathname: '/course',
+                                                                        query: {courseId: course.courseId, courseData: JSON.stringify(course)}
+                                                                    }, '/course')}>
+                                    <h2>{course.title}</h2>
+                                    <p>Note: {course.note}</p>
+                                    <p>{course.creationDate}</p>
+                                </div>)}
+                            </div>
+                        </div>
+                    </div>
+                </>
+            }
+        } else if (courses === 0) { // if courses are not loaded yet
             axios.post('/api/loadCourses', {
                 authtoken: userData.authtoken,
                 userId: userData.userId
@@ -33,30 +79,21 @@ export default function Dashboard() {
                     }, '/error');
                 } else {
                     userData.courses = res.data;
-                    let output = "";
-                    for (const course of userData.courses) {
-                        output += `<div class="dashCourse">
-                                <h2>${course.title}</h2>
-                                <p>Note: ${course.note}</p>
-                                <p>${course.creationDate}</p>
-                               
-                                </div>`;
-                    }
                     setCoursesNav(userData.courses)
                     setCourses(1);
                 }
             });
         }
-        if (courses === 1) {
+        if (courses === 1) { // if courses are loaded
             return (
                 <>
                     <Header></Header>
                     <div className={"main"}>
-                        <CourseNav courses={coursesNav}></CourseNav>
+                        <CourseNav courses={coursesNav} searchText={searchText}></CourseNav>
                         <div className={"mainBox"}>
                             <div className={"dashHeader"}>
                                 <p>Dashboard</p>
-                                <p className={"buttonNew"} onClick={() => {
+                                <p className={"buttonAction"} onClick={() => {
                                     axios.post('/api/newCourse', {
                                         authtoken: userData.authtoken,
                                         userId: userData.userId,
@@ -79,27 +116,30 @@ export default function Dashboard() {
                                 }}>+</p>
                             </div>
                             <div className={"dashMain"}>
-                                {userData.courses.map((course) => <div className={"dashCourse"}
+                                {userData.courses.message !== undefined ? (
+                                    <><p className={"courseMessage"}>{userData.courses.message}</p></>
+                                ) : (
+                                    userData.courses.map((course) => <div className={"dashCourse"}
                                                                        onClick={(e) => router.push({
                                                                            pathname: '/course',
-                                                                           query: {courseId: course.courseId}
+                                                                           query: {courseId: course.courseId, courseData: JSON.stringify(course)}
                                                                        }, '/course')}>
                                     <h2>{course.title}</h2>
                                     <p>Note: {course.note}</p>
                                     <p>{course.creationDate}</p>
 
-                                </div>)}
+                                </div>))}
                             </div>
                         </div>
                     </div>
                 </>
             )
-        } else {
+        } else { // if courses are loading at the moment
             return (
                 <>
                     <Header></Header>
                     <div className={"main"}>
-                        <CourseNav courses={coursesNav}></CourseNav>
+                        <CourseNav courses={coursesNav} searchText={searchText}></CourseNav>
                         <div className={"mainBox"}>
                             <div className={"dashHeader"}>
                                 <p>Dashboard</p>
@@ -112,7 +152,7 @@ export default function Dashboard() {
                 </>
             )
         }
-    } else {
+    } else { // if not loggedIn
         return (
             <>
                 <Header></Header>

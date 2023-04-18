@@ -76,3 +76,17 @@
     border-radius: var(--course-text-radius);
     margin-top: var(--course-text-margin-top);
 }
+
+#courseJoinLeaveButton {
+    background-color: var(--color-dark);
+    height: var(--course-edit-button-height);
+    margin: var(--course-edit-button-margin);
+    width: fit-content;
+    padding: var(--course-button-padding);
+    border-radius: var(--course-edit-button-radius);
+    cursor: pointer;
+}
+
+#courseJoinLeaveButton:hover {
+    background-color: var(--color-light);
+}

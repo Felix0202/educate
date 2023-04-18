@@ -44,3 +44,7 @@
 .courseNavFind {
     height: var(--courseNav-box-find-height);
 }
+
+.courseNavNoCourses {
+    color: var(--color-dark);
+}

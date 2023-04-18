@@ -78,7 +78,7 @@ if ($_GET["loginUser"]) {
     }
     if (!$isReqOk) {
         $response = new stdClass();
-        $response->message = "User not found";
+        $response->message = "Username / Password wrong";
         echo json_encode($response);
     }
 
@@ -148,9 +148,31 @@ if ($_GET["loginUser"]) {
         }
     }
 
+    if ($_GET["loadPublicCourses"]) {
+        $searchText = $conn->real_escape_string($postBody->searchText);
+        $query = "SELECT courseId, title, note, DATE_FORMAT(creationDate, '%d.%m.%Y') 'creationDate', isPublic From course WHERE isPublic = 1 AND title like '%$searchText%'";
+        if ($result = $conn->query($query)) {
+            if ($result->num_rows != 0) {
+                $emparray = array();
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $emparray[] = $row;
+                    $isReqOk = true;
+                }
+                echo json_encode($emparray);
+            }
+        }
+
+        if (!$isReqOk) {
+            $isReqOk = true;
+            $response = new stdClass();
+            $response->message = "No courses found!";
+            echo json_encode($response);
+        }
+    }
+
     if ($_GET["loadCourses"]) {
         $userId = $conn->real_escape_string($postBody->userId);
-        $query = "SELECT courseId, title, note, DATE_FORMAT(creationDate, '%d.%m.%Y') 'creationDate' FROM usercourse join course using(courseId) WHERE userId = '$userId'";
+        $query = "SELECT courseId, title, note, DATE_FORMAT(creationDate, '%d.%m.%Y') 'creationDate', isPublic, isOwner FROM usercourse join course using(courseId) WHERE userId = '$userId'";
         if ($result = $conn->query($query)) {
             if ($result->num_rows != 0) {
                 $emparray = array();
@@ -173,56 +195,58 @@ if ($_GET["loginUser"]) {
     if ($_GET["loadCourse"]) {
         $userId = $conn->real_escape_string($postBody->userId);
         $courseId = $conn->real_escape_string($postBody->courseId);
-        $query = "SELECT * FROM usercourse WHERE userId = '$userId' AND courseId = '$courseId'";
-        if ($result = $conn->query($query)) {
-            if ($result->num_rows != 0) {
-                $query = "SELECT * FROM courseEntry join cardEntry using (entryId) WHERE courseId = '$courseId'";
-                $emparray = array();
-                if ($result = $conn->query($query)) {
-                    if ($result->num_rows != 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $emparray[] = $row;
-                            $isReqOk = true;
-                        }
+        $query1 = "SELECT * FROM course WHERE course.courseId = '$courseId' and isPublic = 1";
+        $query2 = "SELECT * FROM usercourse join course using (courseId) WHERE userId = '$userId' AND courseId = '$courseId'";
+        $result1 = $conn->query($query1);
+        $result2 = $conn->query($query2);
+        if ($result1->num_rows != 0 || $result2->num_rows != 0) {
+            $query = "SELECT * FROM courseEntry join cardEntry using (entryId) WHERE courseId = '$courseId'";
+            $emparray = array();
+            if ($result = $conn->query($query)) {
+                if ($result->num_rows != 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $emparray[] = $row;
+                        $isReqOk = true;
                     }
                 }
+            }
 
-                $query = "SELECT * FROM courseEntry join textEntry using (entryId) WHERE courseId = '$courseId'";
-                if ($result = $conn->query($query)) {
-                    if ($result->num_rows != 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $emparray[] = $row;
-                            $isReqOk = true;
-                        }
-
+            $query = "SELECT * FROM courseEntry join textEntry using (entryId) WHERE courseId = '$courseId'";
+            if ($result = $conn->query($query)) {
+                if ($result->num_rows != 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $emparray[] = $row;
+                        $isReqOk = true;
                     }
-                }
 
-                if (!$isReqOk) {
-                    $isReqOk = true;
-                    $response = new stdClass();
-                    $response->message = "No entries yet ...";
-                    echo json_encode($response);
-                } else {
-                    echo json_encode($emparray);
                 }
-            } else {
+            }
+
+            if (!$isReqOk) {
                 $isReqOk = true;
                 $response = new stdClass();
-                $response->error = "You do not have Access to this Course!";
+                $response->message = "No entries yet ...";
                 echo json_encode($response);
+            } else {
+                echo json_encode($emparray);
             }
+        } else {
+            $isReqOk = true;
+            $response = new stdClass();
+            $response->error = "You do not have Access to this Course!";
+            echo json_encode($response);
         }
+
     }
 
     if ($_GET["newCourse"]) {
         $userId = $conn->real_escape_string($postBody->userId);
         try {
             $conn->begin_transaction();
-            $query = "INSERT INTO course(title, note, creationDate, isPublic) VALUES ('New Course',' nothing',current_timestamp(),'1')";
+            $query = "INSERT INTO course(title, note, creationDate, isPublic) VALUES ('New Course',' nothing',current_timestamp(), 1)";
             $conn->query($query);
             $courseId = mysqli_insert_id($conn);
-            $query = "INSERT INTO usercourse(userId, courseId) VALUES ('{$userId}','$courseId')";
+            $query = "INSERT INTO usercourse(userId, courseId, isOwner) VALUES ('{$userId}','$courseId', 1)";
             $conn->query($query);
         } catch (Exception $exception) {
             $conn->rollback();
@@ -239,6 +263,41 @@ if ($_GET["loginUser"]) {
             $response->error = "Create course not possible";
             echo json_encode($response);
         }
+    }
+
+    if ($_GET["setUserCourse"]) {
+        $userId = $conn->real_escape_string($postBody->userId);
+        $courseId = $conn->real_escape_string($postBody->courseId);
+        $userJoins = $conn->real_escape_string($postBody->userJoins);
+
+
+        if ($userJoins == 1) {
+            $query = "INSERT INTO usercourse (userId, courseId, isOwner) VALUES ('$userId', '$courseId', 0)";
+            if ($result = $conn->query($query)) {
+                $isReqOk = true;
+            }
+            if (!$isReqOk) {
+                $isReqOk = true;
+                $response = new stdClass();
+                $response->error = "Course Join not possible";
+                echo json_encode($response);
+            }
+        } else if ($userJoins == 0) {
+            try {
+                $query = "DELETE FROM usercourse WHERE userId = '$userId' and courseId = '$courseId'";
+                $result = $conn->query($query);
+                $isReqOk = true;
+            } catch (Exception $ex) {
+
+            }
+            if (!$isReqOk) {
+                $isReqOk = true;
+                $response = new stdClass();
+                $response->error = "Leve Course not possible";
+                echo json_encode($response);
+            }
+        }
+
     }
 
     if ($_GET["isLoggedIn"]) {
