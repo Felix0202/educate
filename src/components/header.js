@@ -17,7 +17,7 @@ export default function header() {
                         <Link className={"headerLink"} href="../">ABOUT</Link>
                         <Link className={"headerLink"} href="../dashboard">DASHBOARD</Link>
                         <Link className={"headerAccount"} href="../settings">
-                            <img id={"headerSettings"} src="../../settings.svg" alt=""/>
+                            <img id={"headerSettings"} src="../../settings_new.svg" alt=""/>
                             {userData.name}
                         </Link>
                     </div>

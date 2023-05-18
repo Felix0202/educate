@@ -35,7 +35,9 @@
     border-radius: var(--course-text-radius);
     font-size: var(--course-card-font-size);
     margin-top: calc(var(--course-text-margin-top) * 3);
+    margin-bottom: calc(var(--course-text-margin-top) * 3);
     cursor: pointer;
+    transition: 0.5s ease;
 }
 
 .courseEntryCard:hover {
@@ -54,6 +56,7 @@
     margin: var(--course-edit-button-margin);
     border-radius: var(--course-edit-button-radius);
     cursor: pointer;
+    transition: 0.5s ease;
 }
 
 .courseButtonEdit:hover {
@@ -85,8 +88,25 @@
     padding: var(--course-button-padding);
     border-radius: var(--course-edit-button-radius);
     cursor: pointer;
+    transition: 0.5s ease;
 }
 
 #courseJoinLeaveButton:hover {
     background-color: var(--color-light);
+}
+
+.courseNewEntry{
+    display: flex;
+    background-color: var(--color-dark);
+    padding: var(--course-text-padding);
+    width: fit-content;
+    border-radius: var(--course-text-radius);
+    font-size: var(--course-new-course-font-size);
+    margin-top: calc(var(--course-text-margin-top) * 3);
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.courseNewEntry > p:hover {
+    color: var(--color-light);
 }

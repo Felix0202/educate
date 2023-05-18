@@ -115,7 +115,7 @@ export default function Authentication() {
             <>
                 <Header></Header>
                 <div className={"authBox"}>
-                    <h1 className={"authTitle"}>Forgot Username/Password <span>(Not working yet)</span></h1>
+                    <h1 className={"authTitle"}>Forgot Username/Password <br/><span>(Not working yet)</span></h1>
                     <p className={"authLabel"}>Email:</p>
                     <input className={"authInput"} id={'eMail'} type="text"/>
                     <br/><br/>

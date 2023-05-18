@@ -297,7 +297,40 @@ if ($_GET["loginUser"]) {
                 echo json_encode($response);
             }
         }
+    }
 
+    if ($_GET["newEntry"]) {
+        $userId = $conn->real_escape_string($postBody->userId);
+        $courseId = $conn->real_escape_string($postBody->courseId);
+        $entryCat = $conn->real_escape_string($postBody->entryCat);
+
+        try {
+            $conn->begin_transaction();
+            $query = "INSERT INTO courseEntry (creationDate, courseId) VALUES (current_timestamp(), '$courseId')";
+            $conn->query($query);
+            $entryId = mysqli_insert_id($conn);
+            if ($entryCat == 1) {
+                $query = "INSERT INTO textEntry (entryId, text, isHeadline) VALUES ('$entryId', 'New Text', '0')";
+            } else if ($entryCat == 2) {
+                $query = "INSERT INTO cardEntry (entryId, title) VALUES ('$entryId', 'New Cards')";
+            } else {
+                $query = "INSERT INTO textEntry (entryId, text, isHeadline) VALUES ('$entryId', 'New Headline', '1')";
+            }
+            $conn->query($query);
+        } catch (Exception $exception) {
+            $conn->rollback();
+        }
+        if ($conn->commit()) {
+            $isReqOk = true;
+            echo json_encode($entryId);
+        }
+
+        if (!$isReqOk) {
+            $isReqOk = true;
+            $response = new stdClass();
+            $response->error = "Create new Entry not possible";
+            echo json_encode($response);
+        }
     }
 
     if ($_GET["isLoggedIn"]) {

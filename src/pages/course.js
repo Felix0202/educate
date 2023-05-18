@@ -5,13 +5,68 @@ import {useRouter} from "next/router";
 import axios from "axios";
 import {useState} from "react";
 import {log} from "next/dist/server/typescript/utils";
+import Entry from "@/components/Entry";
 
 export default function Course() {
     const router = useRouter();
     const [course, setCourse] = useState(0);
-    const [entries, setEntries] = useState("loading");
+    const [entries, setEntries] = useState({message: "Loading ..."});
+    const [edit, setEdit] = useState(false);
 
     if (loggedIn) {
+
+        const newEntry = (entryCat) => {
+            console.log(entryCat)
+            axios.post('/api/newEntry', {
+                authtoken: userData.authtoken,
+                userId: userData.userId,
+                courseId: requestedCourse,
+                entryCat: entryCat
+            }).then((res) => {
+                console.log(res.data);
+                if (res.data.error) {
+                    router.push({
+                        pathname: '/error',
+                        query: {error: res.data.error}
+                    }, '/error');
+                } else {
+                    loadEntries();
+                }
+            });
+        }
+
+        const loadEntries = () => {
+            axios.post('/api/loadCourse', {
+                authtoken: userData.authtoken,
+                userId: userData.userId,
+                courseId: requestedCourse
+            }).then((res) => {
+                let courseEntries = res.data;
+                console.log(courseEntries)
+
+                // write the data to string
+                if (courseEntries.message) {
+                    setEntries({message: courseEntries.message});
+                } else if (courseEntries.error) {
+                    router.push({
+                        pathname: '/error',
+                        query: {error: courseEntries.error}
+                    }, '/error');
+                } else {
+                    courseEntries.sort(function (a, b) {
+                        var keyA = new Date(a.creationDate),
+                            keyB = new Date(b.creationDate);
+                        // Compare the 2 dates
+                        if (keyA < keyB) return -1;
+                        if (keyA > keyB) return 1;
+                        return 0;
+                    });
+                    setEntries(courseEntries);
+                }
+                setCourse(requestedCourse);
+                setEdit(false);
+            });
+        }
 
         const setUserCourse = (userJoins) => {
             console.log(userJoins);
@@ -78,46 +133,7 @@ export default function Course() {
             let courseEntries;
             // if no couse is open yet or the requestedCourse is not the current one
             if (course === 0 || course !== requestedCourse) {
-                axios.post('/api/loadCourse', {
-                    authtoken: userData.authtoken,
-                    userId: userData.userId,
-                    courseId: requestedCourse
-                }).then((res) => {
-                    courseEntries = res.data;
-                    let entriesString = "";
-
-                    // write the data to string
-                    if (courseEntries.message) {
-                        entriesString = `<p class="courseMessage">${courseEntries.message}</p>`;
-                    } else if (courseEntries.error) {
-                        router.push({
-                            pathname: '/error',
-                            query: {error: courseEntries.error}
-                        }, '/error');
-                    } else {
-                        courseEntries.sort(function (a, b) {
-                            var keyA = new Date(a.creationDate),
-                                keyB = new Date(b.creationDate);
-                            // Compare the 2 dates
-                            if (keyA < keyB) return -1;
-                            if (keyA > keyB) return 1;
-                            return 0;
-                        });
-                        for (const entry of courseEntries) {
-                            if (entry.text) {
-                                if (entry.isHeadline == 1) {
-                                    entriesString += `<div class="courseEntryHeadline">${entry.text}</div>`;
-                                } else {
-                                    entriesString += `<div class="courseEntryText">${entry.text}</div>`;
-                                }
-                            } else if (entry.title) {
-                                entriesString += `<div class="courseEntryCard"><img class="courseCardIMG" src="../../indexCard.png" alt=""/>${entry.title}</div>`;
-                            }
-                        }
-                    }
-                    setEntries(entriesString);
-                    setCourse(requestedCourse);
-                });
+                loadEntries();
             }
 
             let userJoinedCourse = false;
@@ -153,8 +169,10 @@ export default function Course() {
                                 </div>
                                 <div>
                                     {
-                                        courseData.isOwner === "1" ? <>
-                                            <div className={"courseButtonEdit"}>
+                                        courseData.isOwner === "1" || userJoinedCourse == null ? <>
+                                            <div className={"courseButtonEdit"} onClick={() => {
+                                                setEdit(!edit);
+                                            }}>
                                                 <img src="../../edit.svg" alt="EDIT"/>
                                             </div>
                                         </> : <></>
@@ -175,8 +193,39 @@ export default function Course() {
                                 </div>
                             </div>
 
-                            <div className={"courseMain"} dangerouslySetInnerHTML={{__html: entries}}>
-
+                            <div className={"courseMain"}>
+                                {
+                                    entries.message ? (
+                                        <p>{entries.message}</p>
+                                    ) : (
+                                        entries.map((entry) =>
+                                            entry.title ? (
+                                                <Entry edit={edit} entryCat={2} text={entry.title}></Entry>
+                                            ) : (
+                                                entry.isHeadline === "1" ? (
+                                                    <Entry edit={edit} entryCat={0} text={entry.text}></Entry>
+                                                ) : (
+                                                    <Entry edit={edit} entryCat={1} text={entry.text}></Entry>
+                                                )
+                                            )))
+                                }
+                                {
+                                    courseData.isOwner === "1" || userJoinedCourse == null ? <>
+                                        <br/>
+                                        <div className={"courseNewEntry"}>
+                                            + &nbsp;
+                                            <p  onClick={() => {
+                                                newEntry(0); // 0-> Headline
+                                            }}> Headline </p> &nbsp; | &nbsp;
+                                            <p onClick={() => {
+                                                newEntry(1); // 1 -> Text
+                                            }}>Text</p> &nbsp; | &nbsp;
+                                            <p onClick={() => {
+                                                newEntry(2); // 2 -> Card
+                                            }}>Card</p>
+                                        </div>
+                                    </> : <></>
+                                }
                             </div>
                         </div>
                     </div>

@@ -85,7 +85,7 @@
     --course-edit-button-height: 6vh;
     --course-edit-button-width: 6vh;
     --course-edit-button-radius: 1vh;
-    --course-edit-button-margin: 0vh 0vw 0vh 1vw;
+    --course-edit-button-margin: 0.5vh 0vw 0vh 1vw;
     --course-button-padding: 1.25vh 1vw 1.25vh 1vw;
     --course-main-height: 69vh;
     --course-headline-font-size: 4vh;
@@ -96,6 +96,7 @@
     --course-text-margin-top: 0.8vh;
     --course-card-img: 2.8vh;
     --course-card-img-margin-right: 1.2vh;
+    --course-new-course-font-size: 2.2vh;
 }
 
 @font-face {
@@ -166,4 +167,5 @@ body {
     padding: var(--button-join-padding);
     width: fit-content;
     border-radius: var(--button-join-radius);
+    cursor: pointer;
 }
