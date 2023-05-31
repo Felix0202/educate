@@ -14,10 +14,19 @@
     justify-content: space-between;
 }
 
+.courseHeaderInfos {
+    width: var(--course-header-infos-width);
+}
+
+.courseHeaderButtons {
+    width: var(--course-header-buttons-width);
+}
+
 .courseEntryHeadline {
     color: var(--color-light);
     font-size: var(--course-headline-font-size);
     padding: var(--course-text-padding);
+    margin: var(--course-headline-margin);
 }
 
 .courseEntryText {
@@ -38,6 +47,7 @@
     margin-bottom: calc(var(--course-text-margin-top) * 3);
     cursor: pointer;
     transition: 0.5s ease;
+    display: flex;
 }
 
 .courseEntryCard:hover {
@@ -47,6 +57,86 @@
 .courseCardIMG {
     height: var(--course-card-img);
     margin-right: var(--course-card-img-margin-right);
+}
+
+.courseInputHeadline{
+    color: var(--color-light);
+    font-size: var(--course-headline-font-size);
+    padding: var(--course-text-padding);
+    margin: var(--course-headline-margin);
+    background-color: var(--box1Level-bg-color);
+    border-radius: var(--course-text-radius);
+    width: calc(100% - 6px);
+    margin-left: 3px;
+    border: 0px;
+}
+
+.courseInputText{
+    background-color: var(--box2Level-bg-color);
+    font-size: var(--course-text-font-size);
+    padding: var(--course-text-padding);
+    border-radius: var(--course-text-radius);
+    margin-top: var(--course-text-margin-top);
+    color: white;
+    width: calc(100% - 6px);
+    margin-left: 3px;
+    border: 0px;
+    height: fit-content;
+}
+
+.courseInputCard {
+    background-color: var(--color-dark);
+    border-radius: var(--course-card-input-radius);
+    font-size: var(--course-card-font-size);
+    cursor: pointer;
+    transition: 0.5s ease;
+    border: 0px;
+    width: calc(100% - var(--course-card-img) * 2 - var(--course-card-img-margin-right));
+    color: white;
+}
+
+.courseEntryCardEdit {
+    background-color: var(--color-dark);
+    padding: var(--course-text-padding);
+    width: 100%;
+    border-radius: var(--course-text-radius);
+    font-size: var(--course-card-font-size);
+    margin-top: calc(var(--course-text-margin-top) * 3);
+    margin-bottom: calc(var(--course-text-margin-top) * 3);
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+
+.courseInputTitle {
+    background-color: var(--box2Level-bg-color);
+    border-radius: var(--course-text-radius);
+    font-size: calc(var(--course-title-font-size) + 1em);
+    padding: 3px;
+    color: white;
+    border: 0px;
+    width: 100%;
+}
+
+.courseInputNote {
+    background-color: var(--box2Level-bg-color);
+    border-radius: var(--course-text-radius);
+    font-size: var(--course-title-font-size);
+    color: white;
+    border: 0px;
+    width: 100%;
+    height: fit-content;
+}
+
+.courseHeaderNoteBox {
+    height: var(--course-header-note-box-height);
+}
+
+.courseEntryCardEdit:hover {
+    background-color: var(--color-light);
+}
+
+.courseInputCard:hover {
+    background-color: var(--color-light);
 }
 
 .courseButtonEdit {
@@ -102,11 +192,29 @@
     width: fit-content;
     border-radius: var(--course-text-radius);
     font-size: var(--course-new-course-font-size);
-    margin-top: calc(var(--course-text-margin-top) * 3);
+    margin-top: calc(var(--course-text-margin-top) * 1.5);
+    margin-bottom: calc(var(--course-text-margin-top) * 3);
     cursor: pointer;
     transition: 0.5s ease;
 }
 
 .courseNewEntry > p:hover {
     color: var(--color-light);
+}
+
+.buttonEntrySave {
+    background-color: var(--color-light);
+    color: white;
+    border: 0px;
+    font-size: var(--course-text-font-size);
+    padding: var(--course-text-padding);
+    border-radius: var(--course-text-radius);
+    cursor: pointer;
+    transition: 0.5s ease;
+    margin-left: var(--course-save-margin-left);
+    visibility: hidden;
+}
+
+.buttonEntrySave:hover {
+    background-color: var(--color-dark);
 }

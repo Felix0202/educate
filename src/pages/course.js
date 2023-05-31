@@ -4,7 +4,6 @@ import {loggedIn, userData} from "@/pages/authentication";
 import {useRouter} from "next/router";
 import axios from "axios";
 import {useState} from "react";
-import {log} from "next/dist/server/typescript/utils";
 import Entry from "@/components/Entry";
 
 export default function Course() {
@@ -23,26 +22,25 @@ export default function Course() {
                 courseId: requestedCourse,
                 entryCat: entryCat
             }).then((res) => {
-                console.log(res.data);
                 if (res.data.error) {
                     router.push({
                         pathname: '/error',
                         query: {error: res.data.error}
                     }, '/error');
                 } else {
-                    loadEntries();
+                    loadCourse();
                 }
             });
         }
 
-        const loadEntries = () => {
+        const loadCourse = () => {
             axios.post('/api/loadCourse', {
                 authtoken: userData.authtoken,
                 userId: userData.userId,
                 courseId: requestedCourse
             }).then((res) => {
-                let courseEntries = res.data;
-                console.log(courseEntries)
+                let courseEntries = res.data.entries;
+                userData.courses = res.data.courses;
 
                 // write the data to string
                 if (courseEntries.message) {
@@ -133,7 +131,7 @@ export default function Course() {
             let courseEntries;
             // if no couse is open yet or the requestedCourse is not the current one
             if (course === 0 || course !== requestedCourse) {
-                loadEntries();
+                loadCourse();
             }
 
             let userJoinedCourse = false;
@@ -143,6 +141,7 @@ export default function Course() {
             } else if (userData.courses) {
                 for (const course of userData.courses) {
                     if (course.courseId === requestedCourse) {
+                        courseData = course;
                         if (course.isOwner !== "1") {
                             userJoinedCourse = true;
                         } else {
@@ -162,15 +161,18 @@ export default function Course() {
                         <CourseNav></CourseNav>
                         <div className={"mainBox"}>
                             <div className={"courseHeader"}>
-                                <div>
-                                    <h1>{courseData.title}</h1>
-                                    <p>Note: {courseData.note}</p>
-                                    <p>Created on: {courseData.creationDate}</p>
+                                <div className={"courseHeaderInfos"}>
+                                    <Entry edit={edit} entryCat={3} text={courseData.title} entryId={"-1"} courseId={requestedCourse}></Entry>
+                                    <Entry edit={edit} entryCat={4} text={courseData.note} entryId={"-2"} courseId={requestedCourse}></Entry>
+                                    <div><p>Created on: {courseData.creationDate}</p></div>
                                 </div>
-                                <div>
+                                <div className={"courseHeaderButtons"}>
                                     {
                                         courseData.isOwner === "1" || userJoinedCourse == null ? <>
                                             <div className={"courseButtonEdit"} onClick={() => {
+                                                if (edit === true) {
+                                                    loadCourse();
+                                                }
                                                 setEdit(!edit);
                                             }}>
                                                 <img src="../../edit.svg" alt="EDIT"/>
@@ -196,16 +198,16 @@ export default function Course() {
                             <div className={"courseMain"}>
                                 {
                                     entries.message ? (
-                                        <p>{entries.message}</p>
+                                        <h2>{entries.message}</h2>
                                     ) : (
                                         entries.map((entry) =>
                                             entry.title ? (
-                                                <Entry edit={edit} entryCat={2} text={entry.title}></Entry>
+                                                <Entry edit={edit} entryCat={2} text={entry.title} entryId={entry.entryId} courseId={requestedCourse}></Entry>
                                             ) : (
                                                 entry.isHeadline === "1" ? (
-                                                    <Entry edit={edit} entryCat={0} text={entry.text}></Entry>
+                                                    <Entry edit={edit} entryCat={0} text={entry.text} entryId={entry.entryId} courseId={requestedCourse}></Entry>
                                                 ) : (
-                                                    <Entry edit={edit} entryCat={1} text={entry.text}></Entry>
+                                                    <Entry edit={edit} entryCat={1} text={entry.text} entryId={entry.entryId} courseId={requestedCourse}></Entry>
                                                 )
                                             )))
                                 }

@@ -24,7 +24,7 @@
     --error-box-height: 40vh;
     --error-box-radius: 1vh;
     --error-box-padding: 2vh 2vw 2vh 2vw;
-    --error-box-font-size: 3vh;
+    --error-box-font-size: 3.2vh;
 
     --header-height: 7vh;
     --header-heigh-font: 3.5vh;
@@ -45,9 +45,9 @@
     --auth-box-height: auto;
     --auth-box-radius: 2vh;
     --auth-box-padding: 6vh;
-    --auth-title-font-size: 4.5vh;
-    --auth-label-font-size: 2.5vh;
-    --auth-input-font-size: 2.5vh;
+    --auth-title-font-size: 5vh;
+    --auth-label-font-size: 2.2vh;
+    --auth-input-font-size: 2.2vh;
     --auth-input-padding: 1.5vh;
     --auth-input-radius: 1vh;
 
@@ -58,16 +58,16 @@
     --courseNav-box-margin: 2vh 1vw 2vh 1vw;
     --courseNav-box-padding: 1vw;
     --courseNav-box-radius: 1vw;
-    --courseNav-title-font-size: 2vh;
-    --courseNav-font-size: 2vh;
+    --courseNav-title-font-size: 2.2vh;
+    --courseNav-font-size: 2.2vh;
     --courseNav-entry-margin: 0.5vh;
     --courseNav-entry-padding: 0.5vh;
     --courseNav-entry-radius: 0.6vh;
 
     --main-box-width: 75vw;
-    --main-box-margin-top: 2vh;
+    --main-box-margin-top: 0.5vh;
 
-    --dash-header-font-size: 6vh;
+    --dash-header-font-size: 5vh;
     --dash-header-height: 8vh;
     --dash-main-height: 79vh;
     --dash-course-box-width: 35vw;
@@ -82,21 +82,27 @@
 
     --course-title-font-size: 3vh;
     --course-header-height: 18vh;
+    --course-header-note-box-height: calc(var(--course-title-font-size) + 1.4vh);
+    --course-header-infos-width: calc(73vw - 6vh);
+    --course-header-buttons-width: calc(6vh + 2vw);
     --course-edit-button-height: 6vh;
     --course-edit-button-width: 6vh;
     --course-edit-button-radius: 1vh;
     --course-edit-button-margin: 0.5vh 0vw 0vh 1vw;
     --course-button-padding: 1.25vh 1vw 1.25vh 1vw;
-    --course-main-height: 69vh;
+    --course-main-height: 70.5vh;
     --course-headline-font-size: 4vh;
     --course-text-font-size: 2.2vh;
     --course-card-font-size: 3vh;
     --course-text-padding: 1vh 1vw 1vh 1vw;
+    --course-headline-margin: 1.5vh 0vw 1vh 0vw;
     --course-text-radius: 1vw;
+    --course-card-input-radius: 0.5vw;
     --course-text-margin-top: 0.8vh;
     --course-card-img: 2.8vh;
     --course-card-img-margin-right: 1.2vh;
     --course-new-course-font-size: 2.2vh;
+    --course-save-margin-left: 1.5vw;
 }
 
 @font-face {
@@ -168,4 +174,36 @@ body {
     width: fit-content;
     border-radius: var(--button-join-radius);
     cursor: pointer;
+}
+
+.flexbox {
+    display: flex;
+}
+
+.flexboxJustifyCenterVertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.width100Box {
+    width: 100%;
+}
+
+.heightFitContent {
+    height: fit-content;
+}
+
+.fadeOutClass {
+    animation: fadeOut 1.5s ease;
+    opacity: 0;
+}
+
+@keyframes fadeOut {
+    30% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0;
+    }
 }

@@ -50,6 +50,26 @@ function checkUserLoggedIn($conn)
     }
 }
 
+function checkUserCourseAccess($conn)
+{ // return 1 if course is owned, 0 if isPublic, -1 if none
+    $postBody = json_decode(file_get_contents('php://input'));
+    $userId = $conn->real_escape_string($postBody->userId);
+    $courseId = $conn->real_escape_string($postBody->courseId);
+    $query1 = "SELECT * FROM course WHERE course.courseId = '$courseId' and isPublic = 1";
+    $query2 = "SELECT * FROM usercourse join course using (courseId) WHERE userId = '$userId' AND courseId = '$courseId'";
+    $query3 = "SELECT * FROM usercourse WHERE userId = '$userId' AND courseId = '$courseId' and isOwner = 1";
+    $result1 = $conn->query($query1);
+    $result2 = $conn->query($query2);
+    $result3 = $conn->query($query3);
+    if ($result3->num_rows != 0) {
+        return 1;
+    }
+    if ($result1->num_rows != 0 || $result2->num_rows != 0) {
+        return 0;
+    }
+    return -1;
+}
+
 // LOGIN
 if ($_GET["loginUser"]) {
     $postBody = json_decode(file_get_contents('php://input'));
@@ -194,12 +214,27 @@ if ($_GET["loginUser"]) {
 
     if ($_GET["loadCourse"]) {
         $userId = $conn->real_escape_string($postBody->userId);
+        $query = "SELECT courseId, title, note, DATE_FORMAT(creationDate, '%d.%m.%Y') 'creationDate', isPublic, isOwner FROM usercourse join course using(courseId) WHERE userId = '$userId'";
+        if ($result = $conn->query($query)) {
+            if ($result->num_rows != 0) {
+                $courses = array();
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $courses[] = $row;
+                    $isReqOk = true;
+                }
+            }
+        }
+
+        if (!$isReqOk) {
+            $isReqOk = true;
+            $response = new stdClass();
+            $response->message = "No courses yet!";
+            echo json_encode($response);
+        }
+
         $courseId = $conn->real_escape_string($postBody->courseId);
-        $query1 = "SELECT * FROM course WHERE course.courseId = '$courseId' and isPublic = 1";
-        $query2 = "SELECT * FROM usercourse join course using (courseId) WHERE userId = '$userId' AND courseId = '$courseId'";
-        $result1 = $conn->query($query1);
-        $result2 = $conn->query($query2);
-        if ($result1->num_rows != 0 || $result2->num_rows != 0) {
+        $check = checkUserCourseAccess($conn);
+        if ($check == 0 || $check == 1) {
             $query = "SELECT * FROM courseEntry join cardEntry using (entryId) WHERE courseId = '$courseId'";
             $emparray = array();
             if ($result = $conn->query($query)) {
@@ -228,7 +263,10 @@ if ($_GET["loginUser"]) {
                 $response->message = "No entries yet ...";
                 echo json_encode($response);
             } else {
-                echo json_encode($emparray);
+                $response = new stdClass();
+                $response->entries = $emparray;
+                $response->courses = $courses;
+                echo json_encode($response);
             }
         } else {
             $isReqOk = true;
@@ -293,36 +331,38 @@ if ($_GET["loginUser"]) {
             if (!$isReqOk) {
                 $isReqOk = true;
                 $response = new stdClass();
-                $response->error = "Leve Course not possible";
+                $response->error = "Leave Course not possible";
                 echo json_encode($response);
             }
         }
     }
 
-    if ($_GET["newEntry"]) {
-        $userId = $conn->real_escape_string($postBody->userId);
-        $courseId = $conn->real_escape_string($postBody->courseId);
-        $entryCat = $conn->real_escape_string($postBody->entryCat);
+    if ($_GET["newEntry"]) { // no check if course is owned by user yet
+        if (checkUserCourseAccess($conn) == 1) {
+            $userId = $conn->real_escape_string($postBody->userId);
+            $courseId = $conn->real_escape_string($postBody->courseId);
+            $entryCat = $conn->real_escape_string($postBody->entryCat);
 
-        try {
-            $conn->begin_transaction();
-            $query = "INSERT INTO courseEntry (creationDate, courseId) VALUES (current_timestamp(), '$courseId')";
-            $conn->query($query);
-            $entryId = mysqli_insert_id($conn);
-            if ($entryCat == 1) {
-                $query = "INSERT INTO textEntry (entryId, text, isHeadline) VALUES ('$entryId', 'New Text', '0')";
-            } else if ($entryCat == 2) {
-                $query = "INSERT INTO cardEntry (entryId, title) VALUES ('$entryId', 'New Cards')";
-            } else {
-                $query = "INSERT INTO textEntry (entryId, text, isHeadline) VALUES ('$entryId', 'New Headline', '1')";
+            try {
+                $conn->begin_transaction();
+                $query = "INSERT INTO courseEntry (creationDate, courseId) VALUES (current_timestamp(), '$courseId')";
+                $conn->query($query);
+                $entryId = mysqli_insert_id($conn);
+                if ($entryCat == 1) {
+                    $query = "INSERT INTO textEntry (entryId, text, isHeadline) VALUES ('$entryId', 'New Text', '0')";
+                } else if ($entryCat == 2) {
+                    $query = "INSERT INTO cardEntry (entryId, title) VALUES ('$entryId', 'New Cards')";
+                } else {
+                    $query = "INSERT INTO textEntry (entryId, text, isHeadline) VALUES ('$entryId', 'New Headline', '1')";
+                }
+                $conn->query($query);
+            } catch (Exception $exception) {
+                $conn->rollback();
             }
-            $conn->query($query);
-        } catch (Exception $exception) {
-            $conn->rollback();
-        }
-        if ($conn->commit()) {
-            $isReqOk = true;
-            echo json_encode($entryId);
+            if ($conn->commit()) {
+                $isReqOk = true;
+                echo json_encode($entryId);
+            }
         }
 
         if (!$isReqOk) {
@@ -331,6 +371,56 @@ if ($_GET["loginUser"]) {
             $response->error = "Create new Entry not possible";
             echo json_encode($response);
         }
+    }
+
+    if ($_GET["saveEntry"]) { // no check if course is owned by user yet
+        if (checkUserCourseAccess($conn) == 1) {
+            $entryCat = $conn->real_escape_string($postBody->entryCat);
+            $entryId = $conn->real_escape_string($postBody->entryId);
+            $courseId = $conn->real_escape_string($postBody->courseId);
+            $text = $conn->real_escape_string($postBody->text);
+            if ($entryCat == 0 || $entryCat == 1) {
+                $query = "UPDATE textEntry SET text = '$text' WHERE entryId = $entryId";
+                if ($result = $conn->query($query)) {
+                    $isReqOk = true;
+                    $response = new stdClass();
+                    $response->message = "DONE";
+                    echo json_encode($response);
+                }
+            } else if ($entryCat == 2) {
+                $query = "UPDATE cardEntry SET title = '$text' WHERE entryId = $entryId";
+                if ($result = $conn->query($query)) {
+                    $isReqOk = true;
+                    $response = new stdClass();
+                    $response->message = "DONE";
+                    echo json_encode($response);
+                }
+            } else if ($entryCat == 3) {
+                $query = "UPDATE course SET title = '$text' WHERE courseId = $courseId";
+                if ($result = $conn->query($query)) {
+                    $isReqOk = true;
+                    $response = new stdClass();
+                    $response->message = "DONE";
+                    echo json_encode($response);
+                }
+            } else if ($entryCat == 4) {
+                $query = "UPDATE course SET note = '$text' WHERE courseId = $courseId";
+                if ($result = $conn->query($query)) {
+                    $isReqOk = true;
+                    $response = new stdClass();
+                    $response->message = "DONE";
+                    echo json_encode($response);
+                }
+            }
+        }
+
+        if (!$isReqOk) {
+            $isReqOk = true;
+            $response = new stdClass();
+            $response->error = "Update Entry not possible";
+            echo json_encode($response);
+        }
+
     }
 
     if ($_GET["isLoggedIn"]) {
