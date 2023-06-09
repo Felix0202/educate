@@ -1,6 +1,8 @@
 import {loggedIn, userData} from "@/pages/authentication";
 import axios from "axios";
 import {useRouter} from "next/router";
+import {remove} from "next/dist/build/webpack/loaders/resolve-url-loader/lib/file-protocol";
+import {useState} from "react";
 
 // entryCat: 0->Text, 1->Headline, 2->Card, 3->CourseTitle, 4->CourseNote
 
@@ -9,7 +11,6 @@ export default function Entry(ctx) {
 
     const saveEntry = (entryId) => {
         let newText = document.getElementById("inputEntry" + entryId).value;
-        console.log(newText)
         axios.post('/api/saveEntry', {
             authtoken: userData.authtoken,
             userId: userData.userId,
@@ -18,7 +19,6 @@ export default function Entry(ctx) {
             entryCat: ctx.entryCat,
             text: newText
         }).then((res) => {
-            console.log(res.data);
             if (res.data.error) {
                 router.push({
                     pathname: '/error',
@@ -42,11 +42,39 @@ export default function Entry(ctx) {
         });
     }
 
+    const deleteEntry = (entryId) => {
+        axios.post('/api/deleteEntry', {
+            authtoken: userData.authtoken,
+            userId: userData.userId,
+            entryId: ctx.entryId,
+            courseId: ctx.courseId,
+            entryCat: ctx.entryCat,
+        }).then((res) => {
+            if (res.data.error) {
+                router.push({
+                    pathname: '/error',
+                    query: {error: res.data.error}
+                }, '/error');
+            } else {
+                document.getElementById("entryBox" + ctx.entryId).classList.add("displayNone");
+            }
+        });
+    }
+
     if (loggedIn) {
         if (ctx.edit) {
             if (ctx.entryCat === 0) {
                 return <>
-                    <div className={"flexbox"}>
+                    <div className={"flexbox"} id={"entryBox" + ctx.entryId}>
+                        <div className={"flexboxJustifyCenterVertical"}>
+                            <div className={"courseDeleteEntryBox"} onClick={() => {
+                                deleteEntry(ctx.entryId);
+                            }}>
+                                <div className={"flexboxJustifyCenterVertical"}>
+                                    x
+                                </div>
+                            </div>
+                        </div>
                         <input type={"text"} className={"courseInputHeadline"} id={"inputEntry" + ctx.entryId}
                                defaultValue={ctx.text} onClick={() => {
                             document.getElementById("entrySave" + ctx.entryId).style.visibility = "visible";
@@ -61,7 +89,16 @@ export default function Entry(ctx) {
                 </>
             } else if (ctx.entryCat === 1) {
                 return <>
-                    <div className={"flexbox"}>
+                    <div className={"flexbox"} id={"entryBox" + ctx.entryId}>
+                        <div className={"flexboxJustifyCenterVertical"}>
+                            <div className={"courseDeleteEntryBox"} onClick={() => {
+                                deleteEntry(ctx.entryId);
+                            }}>
+                                <div className={"flexboxJustifyCenterVertical"}>
+                                    x
+                                </div>
+                            </div>
+                        </div>
                         <textarea type={"text"} className={"courseInputText"} id={"inputEntry" + ctx.entryId}
                                   defaultValue={ctx.text} onClick={() => {
                             document.getElementById("entrySave" + ctx.entryId).style.visibility = "visible";
@@ -76,7 +113,16 @@ export default function Entry(ctx) {
                 </>
             } else if (ctx.entryCat === 2) {
                 return <>
-                    <div className={"flexbox"}>
+                    <div className={"flexbox"} id={"entryBox" + ctx.entryId}>
+                        <div className={"flexboxJustifyCenterVertical"}>
+                            <div className={"courseDeleteEntryBox"} onClick={() => {
+                                deleteEntry(ctx.entryId);
+                            }}>
+                                <div className={"flexboxJustifyCenterVertical"}>
+                                    x
+                                </div>
+                            </div>
+                        </div>
                         <div className={"courseEntryCardEdit"}><img className={"courseCardIMG"}
                                                                     src="../../indexCard.png"
                                                                     alt=""/><input className={"courseInputCard"}

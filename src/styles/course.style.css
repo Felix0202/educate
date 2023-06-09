@@ -20,6 +20,18 @@
 
 .courseHeaderButtons {
     width: var(--course-header-buttons-width);
+    display: flex;
+    justify-content: right;
+}
+
+.courseHeaderPublicBox {
+    height: 100%;
+}
+
+.courseHeaderPublicInput {
+    height: var(--course-header-public-input-size);
+    width: var(--course-header-public-input-size);
+    margin-left: var(--course-header-public-input-margin);
 }
 
 .courseEntryHeadline {
@@ -59,7 +71,7 @@
     margin-right: var(--course-card-img-margin-right);
 }
 
-.courseInputHeadline{
+.courseInputHeadline {
     color: var(--color-light);
     font-size: var(--course-headline-font-size);
     padding: var(--course-text-padding);
@@ -71,7 +83,7 @@
     border: 0px;
 }
 
-.courseInputText{
+.courseInputText {
     background-color: var(--box2Level-bg-color);
     font-size: var(--course-text-font-size);
     padding: var(--course-text-padding);
@@ -125,6 +137,7 @@
     border: 0px;
     width: 100%;
     height: fit-content;
+    padding-left: 10px;
 }
 
 .courseHeaderNoteBox {
@@ -162,6 +175,21 @@
     transform: translate(-50%, -50%);
 }
 
+.courseButtonDelete {
+    background-color: var(--color-dark);
+    height: var(--course-edit-button-height);
+    width: var(--course-edit-button-width);
+    margin: var(--course-edit-button-margin);
+    border-radius: var(--course-edit-button-radius);
+    cursor: pointer;
+    transition: 0.5s ease;
+    text-align: center;
+}
+
+.courseButtonDelete:hover {
+    background-color: var(--color-red);
+}
+
 .courseMessage {
     color: var(--color-dark);
     font-size: var(--course-text-font-size);
@@ -185,7 +213,7 @@
     background-color: var(--color-light);
 }
 
-.courseNewEntry{
+.courseNewEntry {
     display: flex;
     background-color: var(--color-dark);
     padding: var(--course-text-padding);
@@ -217,4 +245,20 @@
 
 .buttonEntrySave:hover {
     background-color: var(--color-dark);
+}
+
+.courseDeleteEntryBox {
+    background-color: var(--box1Level-bg-color);
+    color: white;
+    border: 0px;
+    font-size: var(--course-text-font-size);
+    padding: var(--course-text-padding);
+    border-radius: var(--course-text-radius);
+    cursor: pointer;
+    transition: 0.5s ease;
+    margin-right: var(--course-save-margin-left);
+}
+
+.courseDeleteEntryBox:hover {
+    background-color: var(--color-red);
 }

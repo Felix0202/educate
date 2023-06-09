@@ -303,6 +303,34 @@ if ($_GET["loginUser"]) {
         }
     }
 
+    if ($_GET["deleteCourse"]) {
+        $userId = $conn->real_escape_string($postBody->userId);
+        $courseId = $conn->real_escape_string($postBody->courseId);
+
+        if (checkUserCourseAccess($conn) == 1) {
+            try {
+                $conn->begin_transaction();
+                $query = "DELETE FROM course WHERE courseId = $courseId";
+                $conn->query($query);
+                $query = "DELETE FROM usercourse where courseId = $courseId";
+                $conn->query($query);
+            } catch (Exception $exception) {
+                $conn->rollback();
+            }
+            if ($conn->commit()) {
+                $isReqOk = true;
+                echo json_encode($courseId);
+            }
+        }
+
+        if (!$isReqOk) {
+            $isReqOk = true;
+            $response = new stdClass();
+            $response->error = "Delete course not possible";
+            echo json_encode($response);
+        }
+    }
+
     if ($_GET["setUserCourse"]) {
         $userId = $conn->real_escape_string($postBody->userId);
         $courseId = $conn->real_escape_string($postBody->courseId);
@@ -420,7 +448,66 @@ if ($_GET["loginUser"]) {
             $response->error = "Update Entry not possible";
             echo json_encode($response);
         }
+    }
 
+    if ($_GET["deleteEntry"]) { // no check if course is owned by user yet
+        if (checkUserCourseAccess($conn) == 1) {
+            $userId = $conn->real_escape_string($postBody->userId);
+            $courseId = $conn->real_escape_string($postBody->courseId);
+            $entryCat = $conn->real_escape_string($postBody->entryCat);
+            $entryId = $conn->real_escape_string($postBody->entryId);
+
+            try {
+                $conn->begin_transaction();
+                $query = "DELETE FROM courseEntry WHERE entryId = $entryId";
+                $conn->query($query);
+                if ($entryCat == 1) {
+                    $query = "DELETE FROM textEntry WHERE entryId = $entryId";
+                } else if ($entryCat == 2) {
+                    $query = "DELETE FROM cardEntry WHERE entryId = $entryId";
+                } else {
+                    $query = "DELETE FROM textEntry WHERE entryId = $entryId";
+                }
+                $conn->query($query);
+            } catch (Exception $exception) {
+                $conn->rollback();
+            }
+            if ($conn->commit()) {
+                $isReqOk = true;
+                echo json_encode($entryId);
+            }
+
+        }
+
+        if (!$isReqOk) {
+            $isReqOk = true;
+            $response = new stdClass();
+            $response->error = "Delete Entry not possible";
+            echo json_encode($response);
+        }
+    }
+
+    if ($_GET["changePublic"]) { // no check if course is owned by user yet
+        if (checkUserCourseAccess($conn) == 1) {
+            $userId = $conn->real_escape_string($postBody->userId);
+            $courseId = $conn->real_escape_string($postBody->courseId);
+            $isPublic = $conn->real_escape_string($postBody->isPublic);
+
+            $query = "UPDATE course SET isPublic = '$isPublic' WHERE courseId = $courseId";
+            if ($result = $conn->query($query)) {
+                $isReqOk = true;
+                $response = new stdClass();
+                $response->message = $isPublic;
+                echo json_encode($response);
+            }
+        }
+
+        if (!$isReqOk) {
+            $isReqOk = true;
+            $response = new stdClass();
+            $response->error = "Change Public Status not possible";
+            echo json_encode($response);
+        }
     }
 
     if ($_GET["isLoggedIn"]) {

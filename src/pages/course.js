@@ -59,6 +59,7 @@ export default function Course() {
                         if (keyA > keyB) return 1;
                         return 0;
                     });
+                    console.log(courseEntries)
                     setEntries(courseEntries);
                 }
                 setCourse(requestedCourse);
@@ -86,6 +87,25 @@ export default function Course() {
                     }, '/dashboard');
                 }
             });
+        }
+
+        const deleteCourse = () => {
+            axios.post('/api/deleteCourse', {
+                authtoken: userData.authtoken,
+                userId: userData.userId,
+                courseId: requestedCourse
+            }).then((res) => {
+                if (res.data.error) {
+                    router.push({
+                        pathname: '/error',
+                        query: {error: res.data.error}
+                    }, '/error');
+                } else {
+                    router.push({
+                        pathname: '/dashboard',
+                    }, '/dashboard');
+                }
+            })
         }
 
         let requestedCourse = router.query.courseId;
@@ -154,6 +174,12 @@ export default function Course() {
 
             }
 
+            console.log(courseData)
+
+            let isPublic = courseData.isPublic === "1";
+
+            console.log(isPublic)
+
             return (
                 <>
                     <Header></Header>
@@ -162,20 +188,67 @@ export default function Course() {
                         <div className={"mainBox"}>
                             <div className={"courseHeader"}>
                                 <div className={"courseHeaderInfos"}>
-                                    <Entry edit={edit} entryCat={3} text={courseData.title} entryId={"-1"} courseId={requestedCourse}></Entry>
-                                    <Entry edit={edit} entryCat={4} text={courseData.note} entryId={"-2"} courseId={requestedCourse}></Entry>
+                                    <Entry edit={edit} entryCat={3} text={courseData.title} entryId={"-1"}
+                                           courseId={requestedCourse}></Entry>
+                                    <Entry edit={edit} entryCat={4} text={courseData.note} entryId={"-2"}
+                                           courseId={requestedCourse}></Entry>
                                     <div><p>Created on: {courseData.creationDate}</p></div>
+                                    {
+                                        courseData.isOwner === "1" ?
+                                            <>
+                                                <div className={"flexbox"}><p>Public: </p>
+                                                    <div
+                                                        className={"flexboxJustifyCenterVertical courseHeaderPublicBox"}>
+                                                        <div>
+                                                            <input type="checkbox" className={"courseHeaderPublicInput"}
+                                                                   checked={isPublic} onChange={() => {
+                                                                axios.post('/api/changePublic', {
+                                                                    authtoken: userData.authtoken,
+                                                                    userId: userData.userId,
+                                                                    courseId: requestedCourse,
+                                                                    isPublic: (isPublic ? "0" : "1")
+                                                                }).then((res) => {
+                                                                    if (res.data.error) {
+                                                                        router.push({
+                                                                            pathname: '/error',
+                                                                            query: {error: res.data.error}
+                                                                        }, '/error');
+                                                                    } else {
+                                                                        loadCourse()
+                                                                    }
+                                                                })
+                                                            }}/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </> : <>
+                                                <div className={"flexbox"}>
+                                                    <p>Public: Yes</p>
+                                                </div>
+                                            </>
+                                    }
                                 </div>
                                 <div className={"courseHeaderButtons"}>
                                     {
                                         courseData.isOwner === "1" || userJoinedCourse == null ? <>
-                                            <div className={"courseButtonEdit"} onClick={() => {
-                                                if (edit === true) {
-                                                    loadCourse();
+                                            <div className={"flexboxVertical"}>
+                                                <div className={"courseButtonEdit"} onClick={() => {
+                                                    if (edit === true) loadCourse();
+                                                    setEdit(!edit);
+                                                }}>
+                                                    <img src="../../edit.svg" alt="EDIT"/>
+                                                </div>
+                                                {
+                                                    edit === true ? <>
+                                                        <div
+                                                            className={"courseButtonDelete flexboxJustifyCenterVertical"}
+                                                            id={"courseDelete"} onClick={() => {
+                                                            deleteCourse()
+                                                        }}>
+                                                            X
+                                                        </div>
+                                                    </> : <></>
                                                 }
-                                                setEdit(!edit);
-                                            }}>
-                                                <img src="../../edit.svg" alt="EDIT"/>
                                             </div>
                                         </> : <></>
                                     }
@@ -202,12 +275,18 @@ export default function Course() {
                                     ) : (
                                         entries.map((entry) =>
                                             entry.title ? (
-                                                <Entry edit={edit} entryCat={2} text={entry.title} entryId={entry.entryId} courseId={requestedCourse}></Entry>
+                                                <Entry edit={edit} entryCat={2} text={entry.title}
+                                                       entryId={entry.entryId}
+                                                       courseId={requestedCourse}></Entry>
                                             ) : (
                                                 entry.isHeadline === "1" ? (
-                                                    <Entry edit={edit} entryCat={0} text={entry.text} entryId={entry.entryId} courseId={requestedCourse}></Entry>
+                                                    <Entry edit={edit} entryCat={0} text={entry.text}
+                                                           entryId={entry.entryId}
+                                                           courseId={requestedCourse}></Entry>
                                                 ) : (
-                                                    <Entry edit={edit} entryCat={1} text={entry.text} entryId={entry.entryId} courseId={requestedCourse}></Entry>
+                                                    <Entry edit={edit} entryCat={1} text={entry.text}
+                                                           entryId={entry.entryId}
+                                                           courseId={requestedCourse}></Entry>
                                                 )
                                             )))
                                 }
@@ -216,7 +295,7 @@ export default function Course() {
                                         <br/>
                                         <div className={"courseNewEntry"}>
                                             + &nbsp;
-                                            <p  onClick={() => {
+                                            <p onClick={() => {
                                                 newEntry(0); // 0-> Headline
                                             }}> Headline </p> &nbsp; | &nbsp;
                                             <p onClick={() => {

@@ -4,6 +4,7 @@
     --color-normal: white;
     --color-light: #4ECDC4;
     --color-dark: #33575A;
+    --color-red: #ff0000;
 
     --main-bg-color: #292F36;
     --header-bg-color: #1E1E1E;
@@ -81,16 +82,18 @@
     --dash-course-button-margin-bottom: 1vh;
 
     --course-title-font-size: 3vh;
-    --course-header-height: 18vh;
+    --course-header-height: 21vh;
     --course-header-note-box-height: calc(var(--course-title-font-size) + 1.4vh);
-    --course-header-infos-width: calc(73vw - 6vh);
-    --course-header-buttons-width: calc(6vh + 2vw);
+    --course-header-infos-width: 65vw;
+    --course-header-buttons-width: 10vw;
+    --course-header-public-input-size: 2.1vh;
+    --course-header-public-input-margin: 0.6vw;
     --course-edit-button-height: 6vh;
     --course-edit-button-width: 6vh;
     --course-edit-button-radius: 1vh;
     --course-edit-button-margin: 0.5vh 0vw 0vh 1vw;
     --course-button-padding: 1.25vh 1vw 1.25vh 1vw;
-    --course-main-height: 70.5vh;
+    --course-main-height: 69vh;
     --course-headline-font-size: 4vh;
     --course-text-font-size: 2.2vh;
     --course-card-font-size: 3vh;
@@ -103,6 +106,7 @@
     --course-card-img-margin-right: 1.2vh;
     --course-new-course-font-size: 2.2vh;
     --course-save-margin-left: 1.5vw;
+    --course-entry-delete-width: 2vw;
 }
 
 @font-face {
@@ -180,6 +184,11 @@ body {
     display: flex;
 }
 
+.flexboxVertical {
+    display: flex;
+    flex-direction: column;
+}
+
 .flexboxJustifyCenterVertical {
     display: flex;
     flex-direction: column;
@@ -192,6 +201,10 @@ body {
 
 .heightFitContent {
     height: fit-content;
+}
+
+.displayNone {
+    display: none;
 }
 
 .fadeOutClass {
