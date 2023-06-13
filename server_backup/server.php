@@ -123,6 +123,7 @@ if ($_GET["loginUser"]) {
                     } else {
                         $emparray = array();
                         while ($row = mysqli_fetch_assoc($result)) {
+                            $isReqOk = true;
                             $authToken = userLoggedIn($conn, $row['userId']);
                             $row['authtoken'] = $authToken;
                             $userData[] = $row;
@@ -145,7 +146,7 @@ if ($_GET["loginUser"]) {
     }
     if (!$isReqOk) {
         $response = new stdClass();
-        $response->error = "didn´t work";
+        $response->error = "Create new User not possible";
         echo json_encode($response);
     }
 
@@ -154,17 +155,41 @@ if ($_GET["loginUser"]) {
     $isReqOk = false;
     $postBody = json_decode(file_get_contents('php://input'));
 
-// just for testing
-    if ($_GET["getUsers"]) {
-        $table = "user";
-        $query = "SELECT userId, username, name, email, password FROM $table";
-        if ($result = $conn->query($query)) {
-            $emparray = array();
-            while ($row = mysqli_fetch_assoc($result)) {
-                $emparray[] = $row;
+    if ($_GET["saveUserData"]) {
+        $userId = $conn->real_escape_string($postBody->userId);
+        $dataCat = $conn->real_escape_string($postBody->dataCat);
+        $text = $conn->real_escape_string($postBody->text);
+        if ($dataCat == 0) {
+            $query = "UPDATE user SET name = '$text' WHERE userId = '$userId'";
+            if ($result = $conn->query($query)) {
                 $isReqOk = true;
+                $response = new stdClass();
+                $response->message = "DONE";
+                echo json_encode($response);
             }
-            echo json_encode($emparray);
+        } else if ($dataCat == 1) {
+            $query = "UPDATE user SET email = '$text' WHERE userId = '$userId'";
+            if ($result = $conn->query($query)) {
+                $isReqOk = true;
+                $response = new stdClass();
+                $response->message = "DONE";
+                echo json_encode($response);
+            }
+        } else if ($dataCat == 2) {
+            $query = "UPDATE user SET password = md5('$passwordKEYWORD$text') WHERE userId = '$userId'";
+            if ($result = $conn->query($query)) {
+                $isReqOk = true;
+                $response = new stdClass();
+                $response->message = "DONE";
+                echo json_encode($response);
+            }
+        }
+
+        if (!$isReqOk) {
+            $isReqOk = true;
+            $response = new stdClass();
+            $response->error = "Update Entry not possible";
+            echo json_encode($response);
         }
     }
 
@@ -520,7 +545,7 @@ if ($_GET["loginUser"]) {
     // LOGGED IN BUT NO REQUEST ERROR
     if (!$isReqOk) {
         $response = new stdClass();
-        $response->error = "No Req!";
+        $response->error = "Request not valid!";
         echo json_encode($response);
     }
 // NOT LOGGED IN ERROR

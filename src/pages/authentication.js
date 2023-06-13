@@ -28,7 +28,7 @@ export default function Authentication() {
                 console.log(userData)
                 delete userData['password'];
                 router.push('/dashboard');
-            } else if (res.data.message){
+            } else if (res.data.message) {
                 document.getElementById("authMessage").innerHTML = `<p style="color: red">${res.data.message}</p><br>`;
             } else {
                 router.push({
@@ -40,29 +40,32 @@ export default function Authentication() {
     }
 
     const forgotAuth = () => {
-        alert("forgot");
+        alert("forgot not yet implemented");
     }
 
     const signUp = () => {
         userData.userName = document.getElementById('userName').value.trim();
         userData.email = document.getElementById('eMail').value.trim();
-        userData.password = document.getElementById('password');
+        userData.password = document.getElementById('password').value;
         userData.name = document.getElementById('name').value.trim();
 
-        // req to server.js
-        axios.post('/api/newUser', {
+        let body = {
             username: userData.userName,
-            email: userData.email,
             password: userData.password,
+            email: userData.email,
             name: userData.name
-        }).then((res) => {
+        }
+
+        // req to server.js
+        axios.post('/api/newUser', body).then((res) => {
+            console.log(res)
             if (res.data[0] && res.data[0].userId) {
                 userData = res.data[0];
                 loggedIn = true;
                 delete userData['password'];
                 console.log(userData);
                 router.push('/dashboard');
-            } else if (res.data.message){
+            } else if (res.data.message) {
                 document.getElementById("authMessage").innerHTML = `<p style="color: red">${res.data.message}</p><br>`;
             } else {
                 router.push({

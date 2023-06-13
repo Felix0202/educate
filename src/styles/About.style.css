@@ -1,0 +1,13 @@
+.aboutIMG {
+    width: var(--about-img-width);
+}
+
+.aboutTextBox {
+    width: calc(var(--settings-main-width) - var(--about-img-width));
+    padding: var(--about-text-box-padding);
+}
+
+.aboutTextBox100 {
+    padding: var(--about-text-box-padding);
+    width: var(--settings-main-width);
+}

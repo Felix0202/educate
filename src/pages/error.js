@@ -13,7 +13,10 @@ export default function Error() {
                 <br/>
                 <p>Error Message: <span className={"errorMessage"}>{router.query.error}</span></p>
                 <br/>
-                <p>Please reload / try again later!</p>
+                <p>Please reload / try again later <br/><br/>Get back to <span className={"authLink"} onClick={(e) => router.push({
+                    pathname: '/authentication',
+                    query: {authMethod: 1}
+                }, '/authentication')}>Log in</span></p>
             </div>
         </>
     )

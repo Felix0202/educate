@@ -1,0 +1,50 @@
+.mainSettings {
+    width: var(--settings-main-width);
+    height: var(--settings-main-height);
+    background-color: var(--box1Level-bg-color);
+    margin: var(--settings-main-margin);
+    padding: var(--settings-main-padding);
+    border-radius: var(--settings-border-radius);
+    font-size: var(--settings-text-font-size);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.mainSettings > div > p {
+    margin: var(--settings-p-margin);
+    padding: 0px;
+}
+
+.settingsValue {
+    font-size: var(--settings-value-font-size);
+    color: var(--color-light)
+}
+
+.settingsInput {
+    background-color: var(--box2Level-bg-color);
+    border-radius: var(--course-text-radius);
+    font-size: calc(var(--course-title-font-size));
+    margin: var(--settings-input-margin);
+    padding: var(--settings-input-padding);
+    color: var(--color-light);
+    border: 0px;
+    width: 100%;
+}
+
+.buttonSettingsSave {
+    background-color: var(--color-light);
+    color: white;
+    border: 0px;
+    font-size: var(--course-text-font-size);
+    padding: var(--course-text-padding);
+    border-radius: var(--course-text-radius);
+    cursor: pointer;
+    transition: 0.5s ease;
+    margin: var(--settings-input-margin);
+    margin-left: var(--course-save-margin-left);
+    visibility: hidden;
+}
+
+.buttonSettingsSave:hover {
+    background-color: var(--color-dark);
+}

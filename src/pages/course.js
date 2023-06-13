@@ -317,7 +317,7 @@ export default function Course() {
         return (
             <>
                 <Header></Header>
-                <div>
+                <div className={"notLoggedInBox"}>
                     <h2>Please <span className={"authLink"} onClick={(e) => router.push({
                         pathname: '/authentication',
                         query: {authMethod: 1}

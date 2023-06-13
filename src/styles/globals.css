@@ -21,6 +21,8 @@
     --button-join-padding: 1vh 1vw 1vh 1vw;
     --button-join-radius: 1vh;
 
+    --notloggedin-font-size: 3vh;
+
     --error-box-width: 55vw;
     --error-box-height: 40vh;
     --error-box-radius: 1vh;
@@ -107,6 +109,20 @@
     --course-new-course-font-size: 2.2vh;
     --course-save-margin-left: 1.5vw;
     --course-entry-delete-width: 2vw;
+
+    --settings-main-width: 80vw;
+    --settings-main-height: 85vh;
+    --settings-main-margin: 5vh 10vw 5vh 10vw;
+    --settings-input-margin: 1vh 0vw 1vh 0vw;
+    --settings-p-margin: 1vh 0vw 0vh 0vw;
+    --settings-input-padding: 0.8vh;
+    --settings-main-padding: 1vh 1vw 1vh 1vw;
+    --settings-border-radius: 1vw;
+    --settings-text-font-size: 2.2vh;
+    --settings-value-font-size: 4vh;
+
+    --about-img-width: 35vw;
+    --about-text-box-padding: 1vh 1vw 1vh 1vw;
 }
 
 @font-face {
@@ -199,6 +215,10 @@ body {
     width: 100%;
 }
 
+.height100Box {
+    height: 100%;
+}
+
 .heightFitContent {
     height: fit-content;
 }
@@ -219,4 +239,17 @@ body {
     80% {
         opacity: 0;
     }
+}
+
+.notLoggedInBox {
+    background-color: var(--header-bg-color);
+    text-align: center;
+    position: relative;
+    width: fit-content;
+    padding: 2vw;
+    border-radius: 1vw;
+    top: 45vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: var(--notloggedin-font-size);
 }

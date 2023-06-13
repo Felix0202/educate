@@ -56,7 +56,10 @@ export default function Dashboard() {
                                 {publicCourses.map((course) => <div className={"dashCourse"}
                                                                     onClick={(e) => router.push({
                                                                         pathname: '/course',
-                                                                        query: {courseId: course.courseId, courseData: JSON.stringify(course)}
+                                                                        query: {
+                                                                            courseId: course.courseId,
+                                                                            courseData: JSON.stringify(course)
+                                                                        }
                                                                     }, '/course')}>
                                     <h2>{course.title}</h2>
                                     <p>Note: {course.note}</p>
@@ -120,15 +123,18 @@ export default function Dashboard() {
                                     <><p className={"courseMessage"}>{userData.courses.message}</p></>
                                 ) : (
                                     userData.courses.map((course) => <div className={"dashCourse"}
-                                                                       onClick={(e) => router.push({
-                                                                           pathname: '/course',
-                                                                           query: {courseId: course.courseId, courseData: JSON.stringify(course)}
-                                                                       }, '/course')}>
-                                    <h2>{course.title}</h2>
-                                    <p>Note: {course.note}</p>
-                                    <p>{course.creationDate}</p>
+                                                                          onClick={(e) => router.push({
+                                                                              pathname: '/course',
+                                                                              query: {
+                                                                                  courseId: course.courseId,
+                                                                                  courseData: JSON.stringify(course)
+                                                                              }
+                                                                          }, '/course')}>
+                                        <h2>{course.title}</h2>
+                                        <p>Note: {course.note}</p>
+                                        <p>{course.creationDate}</p>
 
-                                </div>))}
+                                    </div>))}
                             </div>
                         </div>
                     </div>
@@ -156,7 +162,7 @@ export default function Dashboard() {
         return (
             <>
                 <Header></Header>
-                <div>
+                <div className={"notLoggedInBox"}>
                     <h2>Please <span className={"authLink"} onClick={(e) => router.push({
                         pathname: '/authentication',
                         query: {authMethod: 1}

@@ -5,6 +5,7 @@ import '../styles/Dashboard.style.css';
 import '../styles/About.style.css';
 import '../styles/courseNav.style.css';
 import '../styles/course.style.css';
+import '../styles/Settings.style.css';
 
 export default function App({ Component, pageProps }) {
   return <Component {...pageProps} />

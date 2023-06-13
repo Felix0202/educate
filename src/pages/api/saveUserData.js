@@ -1,12 +1,11 @@
 import axios from "axios";
 
 export default async function handler(req, res) {
-    console.log("test new User")
     try {
-        const data = await axios.post('http://localhost/educate/server.php?newUser=true', req.body)
+        const data = await axios.post('http://localhost/educate/server.php?saveUserData=true', req.body)
         res.status(200).json(data.data)
     } catch (error) {
-        console.error(error);
+        //console.error(error);
         res.status(200).json({error: "Server Problems!"})
     }
 }
