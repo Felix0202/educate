@@ -1,19 +1,13 @@
 import Header from '../components/header';
 import {loggedIn, userData} from "@/pages/authentication";
 import {useRouter} from "next/router";
-import Entry from "@/components/Entry";
 import axios from "axios";
 
 export default function Settings() {
     const router = useRouter();
 
-    console.log(userData)
-
-
     const saveData = (dataCat) => { // 0 -> Name, 1 -> email, 2 -> password
         let newText = document.getElementById("settingsInput" + dataCat).value;
-        console.log(dataCat)
-        console.log(newText)
         axios.post('/api/saveUserData', {
             authtoken: userData.authtoken,
             userId: userData.userId,

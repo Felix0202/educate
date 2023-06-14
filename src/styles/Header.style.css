@@ -18,7 +18,7 @@ header > div {
 .headerTitle {
     font-size: var(--header-heigh-font);
     color: var(--color-light);
-    cursor: default;
+    cursor: pointer;
 }
 
 .headerTitleE {

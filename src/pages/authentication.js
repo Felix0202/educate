@@ -25,7 +25,6 @@ export default function Authentication() {
             if (res.data[0] && res.data[0].userId) {
                 userData = res.data[0];
                 loggedIn = true;
-                console.log(userData)
                 delete userData['password'];
                 router.push('/dashboard');
             } else if (res.data.message) {
@@ -58,12 +57,10 @@ export default function Authentication() {
 
         // req to server.js
         axios.post('/api/newUser', body).then((res) => {
-            console.log(res)
             if (res.data[0] && res.data[0].userId) {
                 userData = res.data[0];
                 loggedIn = true;
                 delete userData['password'];
-                console.log(userData);
                 router.push('/dashboard');
             } else if (res.data.message) {
                 document.getElementById("authMessage").innerHTML = `<p style="color: red">${res.data.message}</p><br>`;

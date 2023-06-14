@@ -15,7 +15,6 @@ export default function Course() {
     if (loggedIn) {
 
         const newEntry = (entryCat) => {
-            console.log(entryCat)
             axios.post('/api/newEntry', {
                 authtoken: userData.authtoken,
                 userId: userData.userId,
@@ -59,7 +58,6 @@ export default function Course() {
                         if (keyA > keyB) return 1;
                         return 0;
                     });
-                    console.log(courseEntries)
                     setEntries(courseEntries);
                 }
                 setCourse(requestedCourse);
@@ -68,14 +66,12 @@ export default function Course() {
         }
 
         const setUserCourse = (userJoins) => {
-            console.log(userJoins);
             axios.post('/api/setUserCourse', {
                 authtoken: userData.authtoken,
                 userId: userData.userId,
                 courseId: requestedCourse,
                 userJoins: userJoins // if 1 user joins course - if 0 user leaves the course
             }).then((res) => {
-                console.log(res.data);
                 if (res.data.error) {
                     router.push({
                         pathname: '/error',
@@ -155,7 +151,6 @@ export default function Course() {
             }
 
             let userJoinedCourse = false;
-            console.log(userData.courses);
             if (userData.courses.message) {
 
             } else if (userData.courses) {
@@ -174,11 +169,7 @@ export default function Course() {
 
             }
 
-            console.log(courseData)
-
             let isPublic = courseData.isPublic === "1";
-
-            console.log(isPublic)
 
             return (
                 <>

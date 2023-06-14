@@ -1,8 +1,6 @@
 import {loggedIn, userData} from "@/pages/authentication";
 import axios from "axios";
 import {useRouter} from "next/router";
-import {remove} from "next/dist/build/webpack/loaders/resolve-url-loader/lib/file-protocol";
-import {useState} from "react";
 
 // entryCat: 0->Text, 1->Headline, 2->Card, 3->CourseTitle, 4->CourseNote
 

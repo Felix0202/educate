@@ -1,7 +1,6 @@
 import Header from '../components/header';
-import {router} from "next/client";
 
-export default function Home() {
+export default function Index() {
     return (
         <>
             <Header></Header>

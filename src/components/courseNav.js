@@ -67,7 +67,8 @@ export default function CourseNav(ctx) {
                 <div className={"courseNav"}>
                     <div className={"courseNavFind"}>
                         <h2>public courses</h2>
-                        <input autoFocus={true} type="text" className={"courseNavInput"} placeholder={"search"} id={'searchText'} value={searchText || ""} onInput={(e) => {
+                        <input autoFocus={true} type="text" className={"courseNavInput"} placeholder={"search"}
+                               id={'searchText'} value={searchText || ""} onInput={(e) => {
                             loadPublicCourses();
                         }}></input>
                     </div>
@@ -75,14 +76,17 @@ export default function CourseNav(ctx) {
                         <h2>my courses</h2>
                         <div className={"courseNavList"}>
                             {userData.courses.message !== undefined ? (
-                                    <><br/><p className={"courseNavNoCourses"}>{userData.courses.message}</p></>
-                                ) : (
-                                    userData.courses.map((course) => <div className={"courseNavCourse"}
-                                                                   onClick={(e) => router.push({
-                                                                       pathname: '/course',
-                                                                       query: {courseId: course.courseId, courseData: JSON.stringify(course)}
-                                                                   }, '/course')}><p>{course.title}</p></div>)
-                                )}
+                                <><br/><p className={"courseNavNoCourses"}>{userData.courses.message}</p></>
+                            ) : (
+                                userData.courses.map((course) => <div className={"courseNavCourse"}
+                                                                      onClick={(e) => router.push({
+                                                                          pathname: '/course',
+                                                                          query: {
+                                                                              courseId: course.courseId,
+                                                                              courseData: JSON.stringify(course)
+                                                                          }
+                                                                      }, '/course')}><p>{course.title}</p></div>)
+                            )}
                         </div>
                     </div>
                 </div>
@@ -92,7 +96,8 @@ export default function CourseNav(ctx) {
                 <div className={"courseNav"}>
                     <div className={"courseNavFind"}>
                         <h2>public courses</h2>
-                        <input autoFocus={true} type="text" className={"courseNavInput"} placeholder={"search"} id={'searchText'} value={searchText || ""} onInput={(e) => {
+                        <input autoFocus={true} type="text" className={"courseNavInput"} placeholder={"search"}
+                               id={'searchText'} value={searchText || ""} onInput={(e) => {
                             loadPublicCourses();
                         }}></input>
                     </div>
